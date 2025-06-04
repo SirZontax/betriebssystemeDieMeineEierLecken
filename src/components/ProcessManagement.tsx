@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Cpu, Play, Pause, Square, AlertCircle, Users } from 'lucide-react';
+import { Cpu, Play, Pause, Square } from 'lucide-react';
+import CPUEfficiencyCalculator from './CPUEfficiencyCalculator';
 
 const ProcessManagement: React.FC = () => {
   const [selectedProcess, setSelectedProcess] = useState<number | null>(null);
@@ -103,51 +104,6 @@ const ProcessManagement: React.FC = () => {
     }
   ];
 
-  const cpuEfficiencyCalculator = () => {
-    const [processes, setProcesses] = useState(3);
-    const [ioWaitTime, setIoWaitTime] = useState(0.8);
-    
-    const cpuUtilization = 1 - Math.pow(ioWaitTime, processes);
-    
-    return (
-      <div className="bg-gray-50 p-6 rounded-lg">
-        <h4 className="font-semibold mb-4">CPU-Effizienz Rechner</h4>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Anzahl Prozesse (n):</label>
-            <input
-              type="range"
-              min="1"
-              max="10"
-              value={processes}
-              onChange={(e) => setProcesses(parseInt(e.target.value))}
-              className="w-full"
-            />
-            <span className="text-sm text-gray-600">{processes}</span>
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">I/O-Wartezeit (p):</label>
-            <input
-              type="range"
-              min="0.1"
-              max="0.9"
-              step="0.1"
-              value={ioWaitTime}
-              onChange={(e) => setIoWaitTime(parseFloat(e.target.value))}
-              className="w-full"
-            />
-            <span className="text-sm text-gray-600">{ioWaitTime}</span>
-          </div>
-          <div className="bg-white p-4 rounded border">
-            <p className="font-medium">CPU-Ausnutzung = 1 - p^n</p>
-            <p className="text-lg font-bold text-green-600">
-              {(cpuUtilization * 100).toFixed(1)}%
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   const ProcessStateVisualizer = () => (
     <div className="bg-white p-6 rounded-lg border">
@@ -294,18 +250,7 @@ const ProcessManagement: React.FC = () => {
 
         {currentExample === 'efficiency' && (
           <div className="space-y-6">
-            {cpuEfficiencyCalculator()}
-            
-            <div className="bg-blue-50 p-6 rounded-lg">
-              <h4 className="font-semibold mb-2 flex items-center">
-                <AlertCircle className="h-5 w-5 text-blue-600 mr-2" />
-                Wichtige Formel
-              </h4>
-              <p className="font-mono text-lg">CPU-Ausnutzung = 1 - p^n</p>
-              <p className="text-sm text-gray-600 mt-2">
-                Wobei p = I/O-Wartezeit pro Prozess, n = Anzahl Prozesse
-              </p>
-            </div>
+            <CPUEfficiencyCalculator />
           </div>
         )}
 

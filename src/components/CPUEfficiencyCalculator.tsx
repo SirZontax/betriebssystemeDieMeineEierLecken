@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calculator, Lightbulb, CheckCircle, RotateCcw, ArrowRight } from 'lucide-react';
+import { Calculator, Lightbulb, RotateCcw, ArrowRight } from 'lucide-react';
 
 interface Exercise {
   id: string;
