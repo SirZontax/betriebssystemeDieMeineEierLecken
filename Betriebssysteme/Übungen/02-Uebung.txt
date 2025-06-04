@@ -1,0 +1,63 @@
+Übungen
+
+Grundlagen der Betriebssysteme
+
+1. Fragen zum Kapitel „Grundlagen“:
+a) Definieren Sie den Begriff des Betriebssystems anhand einer Definition aus der Vorlesung.
+b) Erläutern Sie die zwei Sichten auf Betriebssysteme. Stellen Sie dabei klar den Fokus der jeweiligen
+Sichtweise heraus.
+
+c) Erklären Sie die Zusammenhänge zwischen Hardware, Betriebssystem und Benutzerprogramm.
+Stellen Sie die Begriffe in einem Schichtendiagramm dar.
+d) Erläutern Sie die beiden Operationsmodi. Geben Sie an, in welchem Modus Betriebssystem und
+Benutzerprogramme jeweils ausgeführt werden.
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+1
+
+Übungen
+
+Grundlagen der Betriebssysteme
+
+2. Fragen zum Kapitel „Hardware-Komponenten“:
+a) Erläutern Sie, welche Auswirkungen der Übergang von Einkern- zu Mehrkern-Prozessoren auf
+Betriebssysteme hat.
+b) Erklären Sie den Begriff des Multithreading.
+
+c) Inwiefern wird dem Betriebssystem beim Multithreading etwas vorgetäuscht?
+d) Wird mit Multithreading echte Parallelität ermöglicht? Begründen Sie Ihre Aussage.
+e) Nennen Sie die vier Arten von Speicher in absteigender Reihenfolge von schnell nach langsam anhand
+der Zugriffsgeschwindigkeit.
+f)
+
+Weshalb ist beim Zugriff auf die beiden langsamsten Speicherarten mit erhöhten Zugriffszeiten zu
+rechnen? Wie kann dies durch ein Betriebssystem optimiert werden?
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+2
+
+Übungen
+
+Grundlagen der Betriebssysteme
+
+3. Fragen zum Kapitel „Aufgaben eines Betriebssystems“:
+a) Eine zentrale Aufgabe des Betriebssystems besteht in der Abstraktion.
+Erklären Sie, was genau damit gemeint ist.
+b) Erläutern Sie den zur Abstraktion hilfreichen Maschinenbegriff nach Coy.
+
+c) Erklären Sie, welche Aufgaben das Betriebssystem im Sinne der Prozessverwaltung übernimmt.
+d) Nennen und erläutern Sie zwei weitere Aufgaben eines Betriebssystems.
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+3
+
+

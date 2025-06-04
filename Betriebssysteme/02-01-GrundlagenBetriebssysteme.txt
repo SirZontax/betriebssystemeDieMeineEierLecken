@@ -1,0 +1,1064 @@
+Vorlesung Betriebssysteme
+Abschnitt 2 – Grundlagen der Betriebssysteme
+Inhalt: Grundlagen der Betriebssysteme / Betriebssystemarten / Betriebssystem-Architekturen
+
+M.Sc. Patrick Eberle
+
+Verwendete Symbole
+
+Symbol
+
+Bedeutung
+Übung
+
+Beispiel
+
+Kommentar
+
+Definition
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+2
+
+Topic Map
+<< Abschnitt >>
+Betriebssystem Grundlagen
+<< Kapitel >>
+Grundlagen
+
+<< dienen der Einordnung /
+Klassifikation >>
+
+<< Kapitel >>
+Betriebssystem
+-Arten
+
+Definition
+<< stellen Anforderungen an >>
+
+Sichten
+Hardware
+
+<< Kapitel >>
+Betriebssystem
+-Architekturen
+
+Aufgaben
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+3
+
+Lernziele der Lerneinheit
+
+▪ Sie können den Begriff des Betriebssystems definieren
+▪ Sie sind in der Lage, die beiden Sichten auf ein Betriebssystem zu erläutern und das
+Betriebssystem zwischen Hard- und Software einzuordnen
+▪ Sie können die Operationsmodi eines Betriebssystems erläutern und kennen die Unterschiede
+▪ Sie kennen die wesentlichen Hardware-Komponenten eines Rechners und können
+Zusammenhänge zwischen Hardware und Betriebssystem erklären
+
+▪ Sie können die wesentlichen Aufgaben eines Betriebssystems nennen und anhand weniger
+Beispiele erläutern
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+4
+
+Kapitel III
+Grundlagen der Betriebssysteme
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+5
+
+Grundlagen der Betriebssysteme
+
+Was ist ein Betriebssystem? (I)
+
+▪ Grundsätzlich: Viele unterschiedliche Definitionen auffindbar. Unterschiede liegen in der Sicht auf
+
+das System, sowie dem jeweiligen Anwendungskontext.
+
+1. Betriebssystem nach DIN 44300:
+„Die Programme eines digitalen Rechensystems, die zusammen mit den Eigenschaften dieser
+Rechenanlage die Basis der möglichen Betriebsarten des digitalen Rechensystems bilden und die
+insbesondere die Abwicklung von Programmen steuern und überwachen.“
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+6
+
+Grundlagen der Betriebssysteme
+
+Was ist ein Betriebssystem? (II)
+
+2. Betriebssystem nach [MB17]:
+
+„… Software […], die im Kernmodus läuft […] [und] Anwendungsprogrammierern (und natürlich
+Anwendungsprogrammen) saubere Abstraktionen der Betriebsmittel anstelle der unschönen Hardware
+[…][zur Verfügung stellt] und andererseits diese Hardwareressourcen […][verwaltet].“
+
+3. Betriebssystem nach Duden:
+„System von Programmen für die Steuerung und Überwachung einer Datenverarbeitungsanlage“
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+7
+
+Grundlagen der Betriebssysteme
+
+Was ist ein Betriebssystem? (III)
+
+Definition 2.1: Betriebssystem
+
+_________________________________________________________________________________
+Software zur Überwachung und Steuerung der Hardwareressourcen eines Rechners,
+sowie zur Abstraktion von Komplexität.
+_________________________________________________________________________________
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+8
+
+Grundlagen der Betriebssysteme
+
+Was ist ein Betriebssystem? (IV)
+
+▪ Unterscheidung zweier verschiedener Sichten auf Betriebssysteme:
+
+• Betriebssystem als erweiterte Maschine
+→ Fokus auf Abstraktion
+
+• Betriebssystem als Ressourcenverwalter
+→ Fokus auf Betriebsmittelverwaltung
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+9
+
+Grundlagen der Betriebssysteme
+
+Was ist ein Betriebssystem? (V)
+
+▪ Sicht 1: Betriebssystem als erweiterte Maschine
+• Top-down-Sicht
+• Abstraktion von Hardware und systemnahen
+Schnittstellen, die Detailwissen erfordern
+
+• Anzahl der Abstraktionsschichten dabei variabel und
+problemangemessen: 1 … *
+• Bereitstellung einfacher Schnittstellen für
+Anwendungsprogramme
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+10
+
+Grundlagen der Betriebssysteme
+
+Was ist ein Betriebssystem? (VI)
+
+▪ Sicht 2: Betriebssystem als Ressourcenverwalter
+• Bottom-up-Sicht
+• Verwaltung aller Systembestandteile eines Rechners
+• Geordnete und kontrollierte Zuteilung der Ressourcen an anfordernde Anwendungsprogramme,
+
+insbesondere bei konkurrierenden Zugriffen
+• Dazu: Einsatz von Multiplexing in der zeitlichen oder räumlichen Dimension,
+bspw. mittels Prozess-Scheduling oder Speicherunterteilung
+(vgl. spätere Vorlesungs-Abschnitte)
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+11
+
+Grundlagen der Betriebssysteme
+
+Was ist ein Betriebssystem? (VII)
+
+▪ Einordnung des Betriebssystems
+• Betriebssystem ordnet sich zwischen
+Hardware und Benutzerprogrammen ein
+• Dabei: Kontrolle und Zugriffe von HardwareRessourcen ist komplexe Aufgabe
+• Betriebssystem abstrahiert diese Komplexität
+vor den Benutzerprogrammen und stellt
+einfaches, klares Modell des Rechners zur
+
+Verfügung
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+12
+
+Grundlagen der Betriebssysteme
+
+Was ist ein Betriebssystem? (VIII)
+
+Definition 2.2: Operationsmodus
+
+_________________________________________________________________________________
+Der Operationsmodus definiert den Ausführungskontext, unter dem ein Programm ausgeführt wird.
+Der Ausführungskontext erstreckt sich dabei über Zugriffsrechte auf Hardware, sowie verfügbare
+Maschinenbefehle.
+_________________________________________________________________________________
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+13
+
+Grundlagen der Betriebssysteme
+
+Was ist ein Betriebssystem? (VIIII)
+
+▪ I. d. R. Unterscheidung zwischen den folgenden Operationsmodi:
+• Kernel-Modus (Kernel Mode):
+• Exklusiv für Betriebssystem
+• Vollständiger Zugriff auf gesamte Hardware
+• Alle auf der Maschine verfügbaren Befehle ausführbar (Befehlssatz, Instruction Set)
+• Auch Supervisormodus genannt
+
+• Benutzermodus (User Mode):
+• Ausführmodus für Benutzerprogramme
+• Eingeschränkter Zugriff auf Hardware (keine Kontrolle über Maschine, keine I/O-Operationen)
+• Lediglich Teilmenge des Befehlssatzes ausführbar
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+14
+
+Grundlagen der Betriebssysteme
+
+Was ist ein Betriebssystem? (X)
+
+Zusammenfassung
+▪ Betriebssystem besitzt zwei zentrale Aufgaben, welche aus den folgenden Sichten hervorgehen:
+• Sicht 1 - Erweiterte Maschine: Aufgabe der Abstraktion komplexer Hardware und
+systemnaher Schnittstellen
+
+• Sicht 2 - Ressourcenverwaltung: Verwaltung, Zuordnung und Kontrolle von Ressourcen
+
+▪ I. A. Unterscheidung zwischen zwei Operationsmodi:
+• Kernel Mode: Exklusiv für Betriebssystem, vollständiger Befehlssatz verfügbar, vollständiger HW-Zugriff
+• User Mode: Für Benutzerprogramme, Teilmenge des Befehlssatzes verfügbar, eingeschränkter HW-Zugriff
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+15
+
+Grundlagen der Betriebssysteme
+
+Hardware-Komponenten (I)
+
+Motivation
+▪ Betriebssystem eng mit Hardware verknüpft
+Sicht 2
+
+▪ Gemäß Sicht 2 besteht zentrale Aufgabe des Betriebssystems in der Verwaltung der HardwareRessourcen
+→ Grundlagenwissen über Hardwarekomponenten vonnöten
+▪ Erst durch Erfüllung von Sicht 2 (Ressourcenverwaltung) wird Sicht 1 (Abstraktion für
+Anwenderprogramme) ermöglicht:
+𝐴𝑏𝑠𝑡𝑟𝑎𝑘𝑡𝑖𝑜𝑛 ⟹ 𝑅𝑒𝑠𝑠𝑜𝑢𝑟𝑐𝑒𝑛𝑣𝑒𝑟𝑤𝑎𝑙𝑡𝑢𝑛𝑔
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+16
+
+Grundlagen der Betriebssysteme
+
+Hardware-Komponenten (II)
+
+▪ Überblick über Hardwarekomponenten
+
+Nähere Betrachtung im Rahmen der Vorlesung, da für das Verständnis von
+Betriebssystemen von zentraler Bedeutung
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+17
+
+Grundlagen der Betriebssysteme
+
+Hardware-Komponenten (III)
+
+▪ Prozessor (Central Processing Unit)
+• In den letzten Jahren: Übergang von Einkern-Prozessoren zur Mehrkern-Prozessoren
+• Ursache für diese Entwicklung: Sogenannte „Frequency Wall“1 bzw. „Power Wall“1:
+• Frequency Wall: Erhöhung der Taktfrequenz geht mit Erhöhung der Betriebsspannung einher.
+Dabei: Überproportionaler Anstieg des Stromverbrauchs, sehr hohe Verlustleistung.
+• Power Wall: Die durch Frequency Wall entstehende Wärme lässt sich nicht mit vertretbarem Aufwand abführen.
+
+• Im Folgenden: Betrachtung von Einkern- und Mehrkern-Prozessoren
+
+1: Vgl. hierzu [MS12, Seite 10]
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+18
+
+Grundlagen der Betriebssysteme
+
+Hardware-Komponenten (IV)
+
+Bestandteile eines Prozessors
+▪ Befehlssatz
+▪ Register (Allgemein)
+
+▪ Register (Speziell):
+• Befehlszähler (Program Counter)
+• Stackpointer (Kellerregister / Stapelregister)
+• Statusregister / Programmstatuswort (Program Status Word)
+
+▪ Cache
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+19
+
+Grundlagen der Betriebssysteme
+
+Hardware-Komponenten (V)
+
+▪ Arbeitsweise eines Prozessors
+
+1. Befehl aus dem Speicher laden (Befehl holen)
+2. Befehl decodieren und notwendige Operanden holen
+
+3. Befehl ausführen
+
+3-stufige Pipeline
+
+• Für jeden Befehl, so lange bis das Programm beendet ist.
+
+• Dabei: Laden von Befehlen / Daten aus dem Speicher erheblich zeitaufwändiger, als Ausführung eines
+Befehls → Verwendung von Registern
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+20
+
+Grundlagen der Betriebssysteme
+
+Hardware-Komponenten (VI)
+
+▪ Prozessor-Pipelining
+• Zur Effizienzsteigerung: Parallele Abarbeitung der Befehle mittels Pipelining
+• CPU verfügt dabei über mehrere getrennte Hol-, Dekodier- und Ausführungseinheiten
+
+Befehl
+
+Befehl
+
+Zeit
+Befehlsverarbeitung mit Pipelining
+
+Patrick Eberle
+
+Zeit
+Befehlsverarbeitung ohne Pipelining
+
+Vorlesung Betriebssysteme
+
+21
+
+Grundlagen der Betriebssysteme
+
+Hardware-Komponenten (VII)
+
+▪ Superskalare CPU (I)
+• Fortschrittlichere Variante zu Pipeline-Architektur
+• Mehrere Ausführungseinheiten: 1 Festkommaarithmetik, 1 Gleitkommaarithmetik, 1 Boolesche
+Operationen
+
+• 1 … * Befehle werden pro Takt geholt, dekodiert und in Puffer abgelegt
+• Jede Ausführungseinheit prüft nach Abschluss ihrer letzten Operation, ob weitere Operationen in Puffer
+abgelegt sind, holt diese und verarbeitet sie gegebenenfalls
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+22
+
+Grundlagen der Betriebssysteme
+
+Hardware-Komponenten (VIII)
+
+▪ Superskalare CPU (II)
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+23
+
+Grundlagen der Betriebssysteme
+
+Hardware-Komponenten (VIIII)
+
+▪ Multithreading / Multithreadingchips
+• Synonym: Hyperthreading (Bezeichnung von Intel)
+• Thread: Leichtgewichtiger Prozess, welcher innerhalb eines Prozesses ausgeführt wird
+• Konzept:
+• Prozessor kann in einem Zustand zwei unterschiedliche Threads verwalten und zwischen diesen umschalten
+• Umschaltzeit zwischen Threads liegt im Nanosekunden-Bereich
+• Thread-Umschaltung innerhalb eines Prozesses
+
+• Gewinn:
+• Wird Thread 1 durch I/O-Zugriff blockiert, kann währenddessen in Thread 2 umgeschaltet und weitergearbeitet
+werden
+• Beim Hyperthreading: zwar keine echte Parallelität, aber Möglichkeit des asynchronen Wartens auf I/O,
+beim echten Multithreading: reale Parallelität in der Programmverarbeitung
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+24
+
+Grundlagen der Betriebssysteme
+
+Hardware-Komponenten (X)
+
+Auswirkungen des Hyperthreading auf das Betriebssystem
+▪ Jeder Thread erscheint dem Betriebssystem wie eigenständiger Prozessor
+▪ Daraus folgt:
+
+𝑃𝑟𝑜𝑧𝑒𝑠𝑠𝑜𝑟𝑎𝑛𝑧𝑎ℎ𝑙𝐿𝑜𝑔𝑖𝑠𝑐ℎ = 𝑃𝑟𝑜𝑧𝑒𝑠𝑠𝑜𝑟𝑎𝑛𝑧𝑎ℎ𝑙𝑃ℎ𝑦𝑠𝑖𝑘𝑎𝑙𝑖𝑠𝑐ℎ ∗ 𝑇ℎ𝑟𝑒𝑎𝑑𝑎𝑛𝑧𝑎ℎ𝑙
+
+▪ I.d.R.: Threadanzahl = 2
+
+Beispiel: Intel Core i7-4790 – Logische vs. Physikalische Prozessoren
+
+________________________________________________________________________________
+Anzahl der physikalischen Prozessorkerne: 4
+Anzahl der logischen Prozessoren gegenüber dem Betriebssystem: 8
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+25
+
+Grundlagen der Betriebssysteme
+
+Hardware-Komponenten (XI)
+
+(Fortsetzung Beispiel)
+
+_________________________________________________________________________________
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+26
+
+Grundlagen der Betriebssysteme
+
+Hardware-Komponenten (XII)
+
+▪ Mehrkernchips
+• Im Gegensatz zu Multithreadingchips: Tatsächliche Existenz mehrerer Prozessorkerne
+Im Allgemeinen: 4, 8 oder 16 Kerne, auf Serversystemen tendenziell mehr
+• Prozessorkerne isoliert voneinander, parallele Verarbeitung
+
+• Unterschiedliche Ausgestaltung hinsichtlich CPU-Cache:
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+27
+
+Grundlagen der Betriebssysteme
+
+Hardware-Komponenten (XIII)
+
+Speicher
+
+▪ Grundsätzlich: Unterscheidung zwischen vier Arten von Speicher:
+• CPU-Register
+• CPU-Cache (L1-Cache, L2-Cache, (L3-Cache))
+• Arbeitsspeicher (RAM, Random Access Memory)
+• Magnetplatte / Festplatte bzw. heutzutage Solid State Disk (SSD)
+
+▪ Anforderungen an Speicher (idealistisch):
+• Performanter Zugriff (bestenfalls schneller als CPU-Befehlsausführung → sonst Verzögerung)
+
+• Großes Speichervolumen
+• Günstige Preise
+Dabei gilt: Tradeoff zwischen den drei Größen
+(Schneller Zugriff → Hoher Preis, Großer Speicher → verhältnismäßig langsamer Zugriff, …)
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+28
+
+Grundlagen der Betriebssysteme
+
+Hardware-Komponenten (XIV)
+
+▪ Speicherhierarchie
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+29
+
+Grundlagen der Betriebssysteme
+
+Hardware-Komponenten (XIV)
+
+▪ Memory Wall
+• Begriff, der das wachsende Ungleichgewicht zwischen CPU- und Speicher-Geschwindigkeit beschreibt
+• Grund für das Ungleichgewicht:
+Limitierte Kommunikations-Bandbreite über Chipgrenzen hinweg (sog. Bandwidth Wall)
+• Wird verschärft bei Von-Neumann-Architektur: Daten und Befehle teilen sich Kommunikationsbus
+
+Quelle:
+John L. Hennesy, David A. Patterson:
+Computer Architecture – A Quantitative Approach,
+Fourth Edition, Morgan Kaufmann, 1990
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+30
+
+Grundlagen der Betriebssysteme
+
+Hardware-Komponenten (XV)
+
+Auswirkungen des Speichers auf das Betriebssystem
+▪ Speicherhierarchie muss beim Datenzugriff berücksichtigt werden
+▪ Optimierung der Speicherzugriffe ist Aufgabe des Betriebssystems, Bsp.: Prefetching
+
+▪ Speicher muss verwaltet werden: Aktualisierung und Invalidierung sind Aufgaben des
+Betriebssystems
+▪ Speicherverwaltung erfolgt durch Algorithmen, welche durch Betriebssystem ausimplementiert
+
+werden
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+31
+
+Grundlagen der Betriebssysteme
+
+Aufgaben des Betriebssystems (I)
+
+▪ Wesentliche Aufgaben des Betriebssystems:
+• Abstraktion
+• Verwaltung von Hardwareressourcen
+▪ Prozessor(en)
+▪ Hauptspeicher
+
+▪ Festspeicher
+▪ Peripheriegeräte
+▪ Rechenzeit
+
+• Prozessverwaltung
+
+• Speicherverwaltung
+• Dateisystemverwaltung
+• Sicherheit und Rechteverwaltung
+• Bereitstellung einer Benutzer-Schnittstelle (Shell)
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+32
+
+Grundlagen der Betriebssysteme
+
+Aufgaben des Betriebssystems (II)
+
+▪ Abstraktion
+• Verbergen der komplexen Hardware-Ansteuerung vor dem Anwender
+• Bereitstellung einfacher Programmierschnittstellen (APIs)
+• Abstraktion des Maschinenbegriffs nach Coy (siehe nächste Folie)
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+33
+
+Grundlagen der Betriebssysteme
+
+Aufgaben des Betriebssystems (III)
+
+▪ Abstraktion
+
+Der Maschinenbegriff nach Coy
+
+Reale Maschine
+Abstrakte Maschine
+Benutzermaschine
+
+=
+=
+=
+
+Zentraleinheit (CPU) + Geräte (Hardware)
+Reale Maschine + Betriebssystem
+Abstrakte Maschine + Anwendungsprogramm
+
+𝑅𝑒𝑎𝑙𝑒 𝑀𝑎𝑠𝑐ℎ𝑖𝑛𝑒 ⊂ 𝐴𝑏𝑠𝑡𝑟𝑎𝑘𝑡𝑒 𝑀𝑎𝑠𝑐ℎ𝑖𝑛𝑒 ⊂ 𝐵𝑒𝑛𝑢𝑡𝑧𝑒𝑟𝑚𝑎𝑠𝑐ℎ𝑖𝑛𝑒
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+34
+
+Grundlagen der Betriebssysteme
+
+Aufgaben des Betriebssystems (IV)
+
+▪ Verwaltung von Hardwareressourcen
+• Ansteuerung der Geräte
+• Interrupt-Steuerung
+• Fehlererkennung und -Behebung
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+35
+
+Grundlagen der Betriebssysteme
+
+Aufgaben des Betriebssystems (V)
+
+▪ Prozessverwaltung
+• Zunächst:
+• Prozesse stellen eine der wichtigsten Abstraktionen im Betriebssystem dar
+• Prozesse sind Grundlage für parallele Verarbeitung von Aufgaben
+
+• Ermöglichung des sogenannten Prozess-Scheduling, mit dem sich mehrere Prozesse eine physikalische
+CPU teilen
+• Überwachung der Prozesse während ihrer Ausführung
+• Erzeugung und Beendigung von Prozessen
+• Kommunikation und Synchronisation von Prozessen
+• Verwaltung von Prozess-Ressourcen und Berechtigungen
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+36
+
+Grundlagen der Betriebssysteme
+
+Aufgaben des Betriebssystems (VI)
+
+▪ Speicherverwaltung
+• Abstraktion des Speicherzugriffs
+• Abstraktion der Speicherhierarchie
+• Effiziente Speicherverwaltung
+
+• Bereitstellung und Freigabe von Adressräumen für Prozesse
+• Speicherzugriffs-Sicherheit
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+37
+
+Grundlagen der Betriebssysteme
+
+Aufgaben des Betriebssystems (VII)
+
+▪ Dateisystemverwaltung
+• Abstraktion und Verwaltung des Zugriffs auf persistente Speicher
+• Erstellen, Lesen, Modifizieren und Löschen von Dateien und Ordnern
+• Caching-Mechanismen für effizienten Zugriff
+
+• Zugriffssicherheit, insbesondere bei Zugriffen durch mehrere Prozesse
+• Verwaltung der Berechtigungen
+• Verwaltung physikalischer / logischer Laufwerke (Massenspeicher-Verbund: RAID)
+
+• Weitere Werkzeuge wie beispielsweise Defragmentierung, Partitionierung usw.
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+38
+
+Grundlagen der Betriebssysteme
+
+Aufgaben des Betriebssystems (VIII)
+
+▪ Sicherheit und Rechteverwaltung
+• Authentifizierung und Autorisierung
+• Verwaltung des Zugriffs auf Ressourcen
+• Unterstützung kryptografischer Funktionen (Public-Key-Kryptografie, Digitale Signaturen, …)
+
+• Bereitstellung von Abwehrmechanismen gegen Malware
+• Gewährleistung der Ausfallsicherheit
+• Backup und Recovery
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+39
+
+Grundlagen der Betriebssysteme
+
+Aufgaben des Betriebssystems (VIIII)
+
+▪ Bereitstellung einer Benutzer-Schnittstelle
+• In Form einer Kommandozeile und/oder einer grafischen Benutzeroberfläche
+• Zur Verwaltung des Betriebssystems
+• Zur Steuerung und Verwaltung von Peripheriegeräten
+
+• Für die Ein- und Ausgabe
+• Zur Konfiguration und Verwaltung der Berechtigungen
+• Zum Ausführen und Beenden von Benutzerprogrammen
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+40
+
+Kapitel IV
+Betriebssystemarten
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+41
+
+Grundlagen der Betriebssysteme
+
+Betriebssystemarten (I)
+
+Basierend auf den vorgestellten Hardware-Komponenten und Aufgaben unterscheidet man
+
+Betriebssysteme anhand ihrer Charakteristika. In Anlehnung an [MB17] existiert dabei folgende
+Artenliste:
+
+GroßrechnerBetriebssysteme
+
+Patrick Eberle
+
+Server-Betriebssysteme
+
+MultiprozessorBetriebssysteme
+
+Vorlesung Betriebssysteme
+
+PC-Betriebssysteme
+
+42
+
+Grundlagen der Betriebssysteme
+
+Betriebssystemarten (II)
+
+Forts. Artenliste:
+
+Handheld und mobile
+Betriebssysteme
+
+Patrick Eberle
+
+EmbeddedBetriebssysteme
+
+SensorknotenBetriebssysteme
+
+Vorlesung Betriebssysteme
+
+EchtzeitBetriebssysteme
+
+SmartcardBetriebssysteme
+
+43
+
+Grundlagen der Betriebssysteme
+
+Betriebssystemarten (III)
+
+Großrechner-Betriebssysteme:
+▪ Sehr hohe Ein- und Ausgabeleistung
+▪ Hohe Kapazität an Ressourcen:
+> 1.000 Festplatten und >1.000.000 Gigabyte an Daten sind nicht ungewöhnlich
+▪ Sind stark darauf ausgelegt, viele Prozesse gleichzeitig auszuführen,
+
+GroßrechnerBetriebssysteme
+
+die hohen Bedarf an schneller Ein- und Ausgabe aufweisen
+▪ Typischerweise: 3 Arten der Prozessverwaltung:
+•
+
+Stapelverarbeitung / Batch Processing
+(Automatisierte Routineaufgaben großen Umfangs ohne interaktive Benutzersitzung, z. B. Fortschreiben von Girokonten bei Banken,
+größere Druckaufträge, ETL-Prozess im Data Warehouse)
+
+•
+
+Dialogverarbeitung / Interaktive Verarbeitung
+(Auftragsbearbeitung im Wechsel zwischen Benutzer und System. Dem Betriebssystem werden kleine Teilaufträge erteilt, welche nacheinander abgearbeitet
+werden, z. B. Sachbearbeitung im Reisebüro, Lagerfachkräfte in Logistikzentren)
+
+•
+
+Timesharing
+(Praktisch gleichzeitige Abarbeitung vieler unterschiedlicher Aufgaben durch das Betriebssystem, z. B. zeitgleiches Ausführen mehrerer Datenbank-Anfragen)
+
+▪ Beispiel-Betriebssysteme: OS/360 und OS/390 → nach und nach Verdrängung durch Unix-Varianten wie Linux, IBM z/OS
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+44
+
+Grundlagen der Betriebssysteme
+
+Betriebssystemarten (IV)
+
+Server-Betriebssysteme:
+▪ Entworfen für Server, die leistungsfähige PCs, Workstations oder Großrechner
+sein können
+Server-Betriebssysteme
+
+▪ Zentrale Verantwortung besteht in gleichzeitiger Abarbeitung vieler Benutzeranfragen
+über ein Netzwerk zur Verteilung von Hard- und Softwareressourcen
+▪ Anwendungsfälle sind z. B.: Druckserver, Dateiserver, Webserver
+
+▪ Beispiel-Betriebssysteme: Solaris, FreeBSD, Linux, Windows Server 20xx
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+45
+
+Grundlagen der Betriebssysteme
+
+Betriebssystemarten (V)
+
+Multiprozessor-Betriebssysteme:
+▪ Sind darauf ausgelegt, mehrere hardwareseitig existierende Prozessoren zu einem
+System zusammenzuschalten
+
+MultiprozessorBetriebssysteme
+
+▪ Hierbei gelten besondere Anforderungen in Bezug auf (Auswahl):
+• Kommunikation zwischen Prozessen und/oder Prozessoren
+• Konsistenz
+• Speicherverwaltung
+
+▪ Beispiel-Betriebssysteme: U. a. Windows, Linux
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+46
+
+Grundlagen der Betriebssysteme
+
+Betriebssystemarten (VI)
+
+PC-Betriebssysteme:
+
+▪ Zielsetzung besteht in der Unterstützung einer großen, universellen Gruppe von
+privaten und geschäftlichen Anwendern
+▪ Dabei:
+
+PC-Betriebssysteme
+
+Betriebssystem sollte möglichst umfangreiches Tooling1 mit sich bringen
+und gleichzeitig robust und fehlertolerant in der Bedienung sein
+▪ Heutzutage:
+Alle modernen PC-Betriebssysteme sind Multiprogrammiersysteme, d. h. sie können eine Vielzahl von
+
+Applikationen gleichzeitig ausführen
+▪ Beispiel-Betriebssysteme: Windows, Linux, MacOS
+1Der Begriff „Tooling“ meint in diesem Zusammenhang die zur Verfügung gestellte Werkzeugunterstützung,
+
+z. B. durch integrierte Browser, Textverarbeitung, Media Player usw.
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+47
+
+Grundlagen der Betriebssysteme
+
+Betriebssystemarten (VII)
+
+Handheld und mobile Betriebssysteme:
+
+▪ Fokus auf kleinere, mobile Hardwaresysteme, die im Verhältnis sehr
+leistungsfähig sind
+▪ Zeichnen sich durch eine Vielzahl kleiner Anwendungen (Apps) von Drittanbietern
+
+Handheld und mobile
+Betriebssysteme
+
+aus und gewinnen bzw. verlieren dadurch Marktanteile
+▪ Herausforderungen:
+• Energieeffizienz
+• User Experience / Developer Experience
+• Weitere vgl. VL-Abschnitt 1
+
+▪ Bei Handheld-Computern: Betriebssystem zumeist nur auf eine spezielle Aufgabe ausgelegt
+
+▪ Beispiel-Betriebssysteme: Android, iOS
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+48
+
+Grundlagen der Betriebssysteme
+
+Betriebssystemarten (VIII)
+
+Embedded Betriebssysteme:
+▪ Fokussierung auf Rechensysteme, die Geräte steuern, welche man als solche
+in der Regel nicht als Computer wahrnimmt
+
+EmbeddedBetriebssysteme
+
+▪ Benutzer können auf diese Systeme in aller Regel keine eigene Software installieren,
+sondern haben vorinstallierte Applikationen und Funktionsumfang im ROM
+▪ Beispiele für Geräte: Mikrowellen, TVs (ausgenommen Smart-TVs), Autos, MP3-Player, …
+
+▪ Beispiel-Betriebssysteme: Embedded Linux, QNX, VxWorks, Windows Embedded bzw. Windows IoT
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+49
+
+Grundlagen der Betriebssysteme
+
+Betriebssystemarten (IX)
+
+Sensorknoten-Betriebssysteme:
+
+▪ Fokussierung auf Netzwerke winziger Sensorknoten, die für unzählige Zwecke
+eingesetzt werden:
+SensorknotenBetriebssysteme
+
+• Gebäudeschutz
+• Überwachung von Landesgrenzen
+• Temperatur- und Niederschlagsmessung
+• …
+
+▪ Hierbei: Verwendung sehr kleiner Betriebssysteme, die ereignisorientiert arbeiten oder periodische
+Messungen durchführen und Daten via Netzwerk übermitteln
+▪ Wie bei eingebetteten Systeme: alle Anwendungen sind bereits vorinstalliert
+▪ Beispiel-Betriebssystem: TinyOS
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+50
+
+Grundlagen der Betriebssysteme
+
+Betriebssystemarten (X)
+
+Echtzeit-Betriebssysteme (RTOS):
+▪ Dienen der Erfüllung zeitkritischer Aufgaben
+▪ Augenmerk liegt auf der richtigen, priorisierten Ressourcenvergabe entsprechend
+
+EchtzeitBetriebssysteme
+
+den Echtzeit-Anforderungen → Reaktionszeit ist wichtiger als Durchsatz!
+▪ Dabei: Einteilung in 2 Klassen:
+• Weiche Echtzeitsysteme: Verpasste Deadlines nicht erwünscht, aber tolerierbar
+Beispiel: Digitale Audio- oder Multimediasysteme
+• Harte Echtzeitsysteme: Verpasste Deadlines nicht tolerierbar
+Beispiel: Medizingeräte, Airbagsteuerung
+
+▪ Beispiel-Betriebssystem: eCos, FreeRTOS, VxWorks (Luft- und Raumfahrt / Verteidigung)
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+51
+
+Grundlagen der Betriebssysteme
+
+Betriebssystemarten (XI)
+
+Smartcard-Betriebssysteme:
+▪ Laufen auf Smartcards, die die Größe einer Kreditkarte aufweisen
+und eigenen Prozessor besitzen
+
+SmartcardBetriebssysteme
+
+▪ Werden z. B: verwendet für:
+• Bezahlvorgänge
+• Authentifizierung und Autorisierung
+
+▪ Ausgelegt auf minimale Rechenleistung und Speicherkapazität
+▪ Beispiel-Betriebssysteme: Zumeist proprietär, BasicCard, CardOS, Java Card
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+52
+
+

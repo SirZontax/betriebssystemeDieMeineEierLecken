@@ -1,0 +1,739 @@
+Vorlesung Betriebssysteme
+Abschnitt 1 – Einführung
+Inhalt: Einführung und Motivation / Geschichte der Betriebssysteme
+
+M.Sc. Patrick Eberle
+
+Verwendete Symbole
+
+Symbol
+
+Bedeutung
+Übung
+
+Beispiel
+
+Kommentar
+
+Definition
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+2
+
+Lernziele der Lerneinheit
+
+▪ Sie sind in der Lage, das Themengebiet der Betriebssysteme innerhalb der Informatik einzuordnen
+
+und kennen angrenzende Themenbereiche
+▪ Sie können grob die Entwicklung der Betriebssysteme über die letzten Jahrzehnte wiedergeben und
+zusammenhängende Entwicklungen erfassen
+▪ Sie kennen die besonderen Anforderungen bei der Entwicklung von und auf mobilen
+Betriebssystemen und können Unterschiede zu Desktop- und Serverbetriebssystemen
+herausstellen
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+3
+
+Kapitel I
+Einführung und Motivation
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+4
+
+Einführung und Motivation
+
+Einordnung in die Informatik
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+5
+
+Einführung und Motivation
+
+Motivation (I)
+
+▪ Systemnahe Hardware-Programmierung in der Praxis komplex und aufwändig
+▪ Betriebssysteme ermöglichen Abstraktion von Rechnerarchitektur und Hardware
+→ Einmalige Softwareentwicklung für (fast) alle Rechnerkonfigurationen
+▪ Multitasking heutzutage von hohem Interesse und Aufgabe des Betriebssystems
+▪ Kenntnisse über Betriebssysteme ermöglichen „bewusstere“ Anwendungsentwicklung in Bezug auf:
+• Performance
+• Stabilität
+• Sicherheit
+• Insbesondere moderne, mobile Betriebssysteme mit neuartigen Herausforderungen für Entwickler
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+6
+
+Einführung und Motivation
+
+Motivation (II)
+
+▪ Digitalisierung und digitale Transformation erhöhen Nachfrage an (Smart) Devices,
+
+die über speziell angepasste, vernetzungsfähige Betriebssysteme verfügen (Auswahl):
+Wearables, z. B.
+Smartwatches, Smart Glasses, …
+
+Medizingeräte, z. B. Blutdruckmessung,
+Beatmung, …
+
+Handhelds in der Logistik, z. B.
+Paketzusteller, Logistikzentrum, …
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+7
+
+Einführung und Motivation
+
+Motivation (III)
+
+▪ Cloud Computing als „großes Betriebssystem“:
+
+→ Konzeptioneller Aufbau und Organisation ähneln einem klassischen Betriebssystem
+
+Patrick Eberle
+
+„Unendlich“ Rechenressourcen,
+welche gebündelt zur Verfügung
+gestellt werden müssen
+
+Anforderung an (automatische)
+Skalierbarkeit der Cloud-Dienste
+
+Self-Service Portale zur
+Anforderung, Nutzung und
+Verwaltung von Cloud-Diensten
+
+Bedarfsgerechte (On-Demand)
+Bereitstellung von Diensten /
+Bedarfsorientierte Abrechnung
+derselben
+
+Vorlesung Betriebssysteme
+
+8
+
+Einführung und Motivation
+
+Status Quo der Betriebssysteme (I)
+
+▪ Branchenübergreifender Einsatz von Betriebssystemen aller Art
+▪ Seit vielen Jahren: mobile Betriebssysteme am Markt
+▪ Mobile Betriebssysteme und App-Entwicklung erfordern erweiterte Kenntnisse über BetriebssystemInterna seitens der App-Entwickler (Power-Management, Anruf-Interrupt, … → dazu später mehr)
+▪ Betriebssystemhersteller passen sich dem „End of the Software Release Cycle“ an
+▪ Betriebssysteme implementieren neuartige Features:
+
+Sprachsteuerung, Gesichtserkennung, Touch-Optimierung
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+9
+
+Einführung und Motivation
+
+Status Quo der Betriebssysteme (II)
+
+▪ Marktanteile Desktop-Betriebssysteme
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+10
+
+Einführung und Motivation
+
+Status Quo der Betriebssysteme (III)
+
+▪ Marktanteile mobiler Betriebssysteme
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+11
+
+Kapitel II
+Geschichte der Betriebssysteme
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+12
+
+Geschichte der Betriebssysteme
+
+Die erste Generation (1945 - 1955) (I)
+
+▪ Verschiedenste Wissenschaftler entwerfen und programmieren erste Maschinen, die später als
+
+Computer dienen. Darunter u. a. Konrad Zuse und Alan Turing
+▪ Der heute als erster funktionierend angesehene digitale Computer besteht aus 300
+Elektronenröhren
+▪ Z3 von Zuse basiert auf elektromechanischen Relais
+▪ Rechner unterscheiden sich in dieser Zeit wie folgt:
+• Manche sind binär, andere benutzen Elektronenröhren
+• Manche sind programmierbar
+
+▪ Gemeinsamkeit aller Rechner:
+• Primitive Ausgestaltung und lange Rechenzeiten für einfachste Berechnungen
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+13
+
+Geschichte der Betriebssysteme
+
+Die erste Generation (1945 - 1955) (II)
+
+▪ Zuse Z3
+
+Quelle: http://www.thorsten-butz.de/wp-content/uploads/2013/01/z3b_muc_800px-0076.jpg
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+14
+
+Geschichte der Betriebssysteme
+
+Die erste Generation (1945 - 1955) (III)
+
+▪ In dieser Zeit: Ein- und dieselben Menschen kümmern sich um Entwurf, Bau, Programmierung,
+
+Betrieb und Wartung der Rechner
+▪ Programmierung ausschließlich in Maschinensprache oder durch Verdrahtung von Stromkreisen
+→ Programmiersprachen damals quasi nicht existent
+▪ Ein Betriebssystem existiert zu dieser Zeit nicht / wird nicht benötigt
+▪ Ab den frühen 1950er Jahren: Einführung von Lochkarten, auf die Programme niedergeschrieben
+werden können
+→ Lochkarten werden anstelle der verdrahteten Steckkarten verwendet
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+15
+
+Geschichte der Betriebssysteme
+
+Die zweite Generation (1955 - 1965) (I)
+
+▪ Einführung von Transistoren Mitte der 1950er Jahre sorgt für große Veränderung:
+• Rechner werden zuverlässiger
+• Serienfertigung
+• Erstmals klare Trennung der Zuständigkeiten zwischen Entwicklern, Herstellern, Operatoren und
+
+Wartungspersonal
+
+▪ Einführung der Großrechner (Mainframe genannt), die in großen klimatisierten Räumen betrieben
+werden
+
+▪ Programmierung in FORTRAN oder Assembler
+▪ Erste Betriebssysteme: FMS (FORTRAN Monitor System) und IBSYS von IBM
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+16
+
+Geschichte der Betriebssysteme
+
+Die zweite Generation (1955 - 1965) (II)
+
+▪ Verarbeitung eines Programms:
+1. Programmierer entwickeln zunächst in FORTRAN oder Assembler auf Papier
+2. Im nächsten Schritt wird Programm auch Lochkarten gestanzt
+3. Zur Ausführung: Weitergabe der Lochkarten an den Operator zur Verarbeitung im Großrechner
+
+4. Abschließend gibt Operator ausgedrucktes Ergebnis an Programmierer zurück und beginnt
+mit nächstem Programm von vorne
+
+▪ Später zur Optimierung der Verarbeitung: Einsatz von Stapelverarbeitungssystemen (Batch):
+• Lochkarten werden auf Ablage im Eingaberaum gesammelt und automatisiert mit Hilfe eines zusätzlichen
+(günstigen) Rechners auf Magnetband eingelesen
+• Für eigentliche Berechnung werden teure Rechner eingesetzt
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+17
+
+Geschichte der Betriebssysteme
+
+Die zweite Generation (1955 - 1965) (III)
+
+▪ Stapelverarbeitungssystem
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+18
+
+Geschichte der Betriebssysteme
+
+Die zweite Generation (1955 - 1965) (IV)
+
+▪ Struktur eines typischen Eingabejobs
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+19
+
+Geschichte der Betriebssysteme
+
+Die dritte Generation (1965 - 1980) (I)
+
+▪ IBM 360 gilt als erste Computerreihe mit IC-Bausteinen, also integrierten Schaltkreisen
+▪ Dadurch: Wesentlich besseres Preis-Leistungsverhältnis als bei Rechnern der zweiten Generation
+▪ Die Idee, zueinander kompatible Rechner zu einer Computerreihe / Rechnerfamilie
+zusammenzufassen, wird zunehmend von Herstellern umgesetzt
+▪ Damaliges Betriebssystem: OS/360
+• Hochkomplex
+• Bestehend aus Millionen Zeilen Assemblercode
+• Hohe Fehlerquote führt zu vielen neuen Versionen, in denen alte Fehler behoben und neue implementiert
+werden
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+20
+
+Geschichte der Betriebssysteme
+
+Die dritte Generation (1965 - 1980) (II)
+
+▪ Bedeutende neue Features am Betriebssystem-Markt u. a.:
+• Multiprogrammierung:
+Während auf Ein-/Ausgabeoperationen gewartet wird, kann anderer Job bearbeitet werden
+→ Erhöhung der Effizienz
+• Spooling (Simultaneous Peripheral Operation On Line):
+Fähigkeit eines Rechnersystems, Jobs von Karten auf Platten einzulesen und von dort aus zu laden
+→ Logistischer Aufwand zur Bereitstellung eines Bands entfällt
+• MULTICS (Multiplexed Information and Computing Service):
+
+Riesige Maschine, die genügend Rechenkapazität für alle Einwohner von Boston bereitstellt
+→ Heute in Form des Cloud-Computing zu sehen
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+21
+
+Geschichte der Betriebssysteme
+
+Die dritte Generation (1965 - 1980) (III)
+
+▪ Später entwickelt Ken Thompson als einer der Entwickler von MULTICS eine abgespeckte
+
+Einbenutzer-Version von MULTICS, welche sich nachfolgend zum Betriebssystem UNIX entwickelt
+▪ Einsatz von UNIX in dieser Zeit hauptsächlich im akademischen Umfeld / Behörden / Unternehmen
+▪ UNIX führt aufgrund der Quelloffenheit zu unterschiedlichen, zueinander inkompatiblen Versionen
+verschiedenster Organisationen
+▪ Abhilfe hierbei schafft der von der IEEE entwickelte POSIX-Standard:
+• Definition einer Systemschnittstelle, die von Systemen eingehalten werden muss
+• Auch noch heutzutage von den meisten UNIX-Systemen unterstützt
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+22
+
+Geschichte der Betriebssysteme
+
+Die dritte Generation (1965 - 1980) (IV)
+
+▪ 1987 entwickelt Andrew S. Tanenbaum kleinen UNIX-Klon namens MINIX:
+• Unterstützung des POSIX-Standard
+• Inzwischen in der dritten Version verfügbar
+• Fokus: hohe Zuverlässigkeit & Verfügbarkeit
+→ Bsp.: Entdeckung fehlerhafter oder abgestürzter Module, sowie Ersetzung ohne Notwendigkeit eines Neustarts
+
+• Im August 2017 wird von Sicherheitsforschern bekanntgegeben, dass bei
+Intel Management Engine (IME) MINIX als Betriebssystem zum Einsatz kommt
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+23
+
+Geschichte der Betriebssysteme
+
+Die dritte Generation (1965 - 1980) (V)
+
+▪ 1991 entwickelt Linus Torvalds das Betriebssystem Linux
+• Wunsch nach nicht nur für Ausbildungszwecke freiem UNIX-System ist Motivation
+• Anfangs Entwicklung mit Hilfe von MINIX, sowie Verwendung von MINIX-Mechanismen
+• Später vielseitige Weiterentwicklung durch „Community“, sodass heute lediglich einige
+
+Basisstrukturen gemeinsamer Nenner von MINIX und Linux sind
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+24
+
+Geschichte der Betriebssysteme
+
+Die vierte Generation (1980 - Heute) (I)
+
+▪ Hochintegrierte Schaltkreise mit tausenden Transistoren auf einem Prozessor läuten Zeitalter des
+
+Personal Computer ein
+▪ Die sogenannten LSI-Schaltungen (Large Scale Integration) eines Mikroprozessorchips sorgen für
+niedrigere Preise und ermöglichen PCs in Privathaushalten
+
+(zum Vergleich: heute Giant Large Scale Integration)
+▪ Im Jahre 1974: Intel bringt mit dem 8080 eine erste Allzweck-8-Bit-CPU auf Markt
+▪ Das Betriebssystem CP/M (Control Program for Microcomputers) für den 8080 wird von Gary Kildall
+entwickelt, welcher kurz später die Firma Digital Research gründet
+▪ CP/M ist erstes Betriebssystem mit Kommandozeile und Vorbild für MS-DOS
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+25
+
+Geschichte der Betriebssysteme
+
+Die vierte Generation (1980 - Heute) (II)
+
+▪ Das Betriebssystem CP/M
+
+Quelle: Computerwoche, https://www.computerwoche.de/g/geschichte-der-betriebssysteme,40338,2#galleryHeadline
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+26
+
+Geschichte der Betriebssysteme
+
+Die vierte Generation (1980 - Heute) (III)
+
+▪ In den frühen 1980er Jahren: IBM entwirft den IBM-PC und ist auf der Suche nach Betriebssystem-
+
+Hersteller
+▪ Daraufhin Anfrage an Bill Gates zur Lizenzierung seines BASIC-Interpreters für den IBM-PC,
+sowie Nachfrage nach Betriebssystem
+▪ Gates nimmt Kontakt zu Seattle Computer Products auf und kauft deren
+Disk Operating System (DOS) für angeblich 75.000 US-Dollar
+▪ IBM kauft Paket aus DOS und BASIC von Gates, benötigt jedoch Änderungen am System
+▪ Gates gründet Firma Microsoft, stellt den DOS-Entwickler Tim Paterson ein und gibt dem
+überarbeiteten System den Namen Microsoft Disk Operating System (MS-DOS)
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+27
+
+Geschichte der Betriebssysteme
+
+Die vierte Generation (1980 - Heute) (IV)
+
+▪ Das Betriebssystem DOS 1.10 auf einem IBM PC 5150
+
+Quelle: Computerwoche, https://www.computerwoche.de/g/geschichte-der-betriebssysteme,40338,3#galleryHeadline
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+28
+
+Geschichte der Betriebssysteme
+
+Die vierte Generation (1980 - Heute) (V)
+
+▪ Die Betriebssysteme CP/M und MS-DOS sowie weitere sind zu diesem Zeitpunkt kommandozeilenbasiert
+
+und erfordern Computer-Kenntnisse zur Bedienung
+▪ Forschungsarbeit von Doug Engelbart aus den 1960er-Jahren wird dann Anlass zur Bereitstellung
+grafischer Benutzungsschnittstellen, die mit Fenstern, Icons und Menüs auch über eine Maus bedienbar
+sind
+▪ Idee der Benutzeroberflächen wird von Forschern des Xerox PARC übernommen und in den dortigen
+Maschinen implementiert
+▪ Steve Jobs sieht bei einem Besuch der Forschungsstätte PARC großes Potenzial in einer grafischen
+Benutzeroberfläche und setzt das Konzept bei der Entwicklung des Apple um
+▪ Zunächst im Projekt Lisa fehlgeschlagen, führt die Benutzeroberfläche mit dem Apple Macintosh zu
+einem großen Erfolg → Schlüssel des Erfolgs: Benutzerfreundlichkeit
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+29
+
+Geschichte der Betriebssysteme
+
+Die vierte Generation (1980 - Heute) (VI)
+
+▪ MacOS mit den Oberflächen des „System 1.1“ bzw. „System 4.2“
+
+Quelle: Computerwoche, https://www.computerwoche.de/g/geschichte-der-betriebssysteme,40338,4#galleryHeadline
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+30
+
+Geschichte der Betriebssysteme
+
+Die vierte Generation (1980 - Heute) (VII)
+
+▪ 1985 – 1995: Microsoft entwickelt inspiriert von MacOS einen Nachfolger für MS-DOS namens
+
+Windows mit grafischer Bedienoberfläche
+▪ Windows setzt dabei zunächst auf MS-DOS auf und abstrahiert von der Kommandozeile
+▪ Ab 1995 wird eigenständige Version von Windows verkauft
+
+→ Betriebssystem Windows 95
+▪ Windows 95 besitzt eigene Betriebssystemelemente und benötigt MS-DOS lediglich zum
+Hochfahren sowie zur Abwärtskompatibilität mit älteren Programmen
+▪ 1998 wird eine modifizierte Version von Windows 95 herausgegeben
+→ Betriebssystem Windows 98
+▪ Windows 95 und 98 weisen immer noch hohen Anteil an 16-Bit-Intel-Maschinencode auf
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+31
+
+Geschichte der Betriebssysteme
+
+Die vierte Generation (1980 - Heute) (VIII)
+
+▪ Das Betriebssystem Windows 95
+
+Quelle: Computerwoche, https://www.computerwoche.de/g/geschichte-der-betriebssysteme,40338,10#galleryHeadline
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+32
+
+Geschichte der Betriebssysteme
+
+Die vierte Generation (1980 - Heute) (VIIII)
+
+▪ Weiteres Betriebssystem von Microsoft: Windows NT (New Technology):
+• Bis zu gewissem Grad kompatibel mit Windows 95
+• Von Grund auf neu entwickelt
+• Reines 32-Bit Betriebssystem
+
+▪ Windows NT wird in mehreren Versionen entwickelt, schafft den Durchbruch aber erst in Version 4.0
+▪ Spätere Version Windows NT 5.0 wird Anfang 1999 in Windows 2000 umbenannt und ist als Nachfolger
+von sowohl Windows 98 als auch NT 4.0 geplant
+
+▪ Nachdem die Nachfolge nur in Teilen gelingt, erscheint neue Version von Windows 98
+→ Windows 98 ME (Millenium Edition)
+▪ 2001 erscheint mit Windows XP eine verbesserte und stabile Version von Windows 2000,
+die nahezu alle bisherigen Windows-Versionen ersetzt
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+33
+
+Geschichte der Betriebssysteme
+
+Die vierte Generation (1980 - Heute) (X)
+
+▪ Windows 98 Millenium Edition und Windows XP
+
+Quelle: https://www.fixmypcfree.com/blog/5-reasons-why-windows-me-is-viewed-as-a-failure/
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+Quelle: Wikipedia
+
+34
+
+Geschichte der Betriebssysteme
+
+Die vierte Generation (1980 - Heute) (XI)
+
+▪ Microsoft und Apple veröffentlichen in den folgenden Jahren weitere Betriebssysteme,
+
+die noch heute in Verwendung sind (Auswahl):
+• Windows Vista, Windows 7, Windows 8, Windows 10, Windows 11
+• macOS Mojave, macOS Catalina, macOS Ventura, macOS Sequoia
+
+▪ Heutiger Hauptkontrahent zu Windows: UNIX-Systeme aller Art
+• UNIX Marktführer bei Netzwerk- und Unternehmensservern
+• Linux vermehrt in Unternehmen und bei Studenten vorzufinden
+
+• Mobile Abkömmlinge von UNIX bzw. Linux: Android, Apple iOS
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+35
+
+Geschichte der Betriebssysteme
+
+Die fünfte Generation (1990 - Heute) (I)
+
+▪ Seit Mitter der 1990er-Jahre: Telefon und mobiler Computer werden in Smartphones kombiniert
+• Idee dazu kam bereits seit den 1970er Jahren, wurde jedoch nicht umgesetzt
+• Erstes Gerät: Nokia N9000
+• Den Begriff „Smartphone“ prägt Ericsson 1997 für das GS88
+
+▪ Anschließend folgen verschiedene Hersteller und verwenden das geschlossene Betriebssystem Symbian
+▪ Kurz darauf beginnen Betriebssysteme wie Blackberry OS, RIM und iOS die Marktanteile von Symbian
+zu verringern
+
+▪ Android betritt den Markt im Jahre 2008 als neues Betriebssystem und braucht nicht lange,
+um seine Rivalen zu überholen
+▪ Im Jahr 2011 wird das Betriebssystem Symbian eingestellt und Nokia beginnt, auf die Windows Phone
+Plattform zu setzen
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+36
+
+Geschichte der Betriebssysteme
+
+Die fünfte Generation (1990 - Heute) (II)
+
+▪ Mobile Betriebssysteme verändern den Betriebssystemmarkt, indem sie neuartige Anforderungen
+
+an Hersteller und Entwickler stellen:
+• Stromsparendes Betriebssystem erforderlich
+• Apps können jederzeit unterbrochen werden
+
+→ Betriebssystem muss erforderliche Mechanismen bereitstellen
+• Unterstützung neuer Funktionen und Peripherie: Touch, Sensorik, …
+• Teilweise geringer Festspeicher
+• Sicherheit
+• Usability
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+37
+
+Geschichte der Betriebssysteme
+
+Die fünfte Generation (1990 - Heute) (III)
+
+▪ Aktuell:
+• Windows und Apple veröffentlichten in der jüngeren Vergangenheit weitere Betriebssysteme (Auswahl):
+• Windows 10 (07/2015), Windows 11 (10/2021)
+• macOS Ventura (10/2022), macOS Sonoma (09/2023), macOS Sequoia (09/2024)
+
+• Inzwischen: neuartige Betriebssysteme am Markt, welche speziell für Smart Devices
+konzipiert wurden (Auswahl):
+• WearOS (Google)
+• Android XR für Extended Reality Devices wie z. B. Smart Glasses (Google)
+• WatchOS (Apple)
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+38
+
+Abbildungsverzeichnis
+
+▪ Alle Abbildungen, sofern nicht anders angegeben aus [MB17]
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+39
+
+Literatur
+
+▪ [BS17]
+
+Betriebssysteme – Grundlagen und Konzepte, Rüdiger Brause, 4. Auflage
+
+Springer Vieweg Verlag, 2017
+ISBN: 978-3-662-54099-2
+
+▪ [GB14]
+
+Grundkurs Betriebssysteme, Peter Mandl, 4. Auflage
+Springer Vieweg Verlag, 2014
+ISBN: 978-3-658-06217-0
+
+▪ [BK17]
+
+Betriebssysteme Kompakt, Christian Baun, 1. Auflage
+Springer Vieweg Verlag, 2017
+ISBN: 978-3-662-53142-6
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+40
+
+Literatur
+
+▪ [MB17]
+
+Moderne Betriebssysteme, Andrew S. Tanenbaum & Herbert Bos, 4. Auflage
+
+Pearson Studium, 2017
+ISBN: 978-3-86894-270-5
+
+▪ [MS12]
+
+Multicore-Software, Urs Gleim & Tobias Schüle
+dpunkt.verlag, 2012
+ISBN: 978-3-89864-758-8
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+41
+
+

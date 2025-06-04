@@ -1,0 +1,56 @@
+Übungen
+
+Prozessverwaltung
+
+1. Fragen zu den Prozess-Grundlagen:
+a) Erklären Sie, weshalb Prozesse ein zentrales Betriebssystem-Konzept darstellen
+b) Erläutern Sie den Unterschied zwischen CPU-Rechenzeit und I/O-Wartezeit
+hinsichtlich eines Prozesses
+
+c) Wie kann ein Betriebssystem die Prozessor-Ausnutzung effizient gestalten, sodass die
+Gesamt-CPU-Rechenzeit erhöht wird?
+d) Stellen Sie die Begriffe Prozess und Programm anhand von drei Merkmalen einander gegenüber
+e) Nennen Sie drei Prozess-Ressourcen
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+1
+
+Übungen
+
+Prozessverwaltung
+
+2. Fragen zur Prozesserzeugung und –beendigung:
+a) Nennen Sie zwei verschiedene Möglichkeiten zur Prozesserzeugung und erklären Sie diese mit jeweils
+einem Beispiel
+b) Nennen Sie zwei verschiedene Möglichkeiten zur Prozessbeendigung und erklären Sie diese mit jeweils
+einem Beispiel
+c) Erläutern Sie, inwiefern sich die Adressraumverwaltung auf einem UNIX-Betriebssystem von der eines
+Windows-Betriebssystems nach der Prozesserzeugung unterscheidet (Stichwort: Copy-on-Write Prinzip)
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+2
+
+Übungen
+
+Prozessverwaltung
+
+3. Fragen zu Prozesszuständen:
+a) Zeichnen Sie einen Graphen, in dem Sie alle möglichen Prozesszustände als Knoten und mögliche
+Prozessübergänge als Kanten darstellen und beschriften Sie sowohl Knoten als auch Kanten
+aussagekräftig
+b) In welchem Zustand befindet sich ein Prozess, wenn er nicht rechenbereit ist, weil er z. B. auf
+ankommende Netzwerkdaten oder eine Tastatureingabe wartet?
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+3
+
+

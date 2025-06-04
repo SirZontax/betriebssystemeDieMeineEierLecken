@@ -1,0 +1,41 @@
+Übungen
+
+Einführung und Geschichte
+
+1. Fragen zum Kapitel „Einordnung und Motivation“:
+a) Nennen Sie zwei in der Vorlesung behandelte Teilgebiete der Informatik,
+die für Betriebssysteme von Bedeutung sind
+b) Erläutern Sie, inwiefern die in a) genannten Teilgebiete in einem Betriebssystem zusammenhängen
+
+c) Inwiefern besteht ein Zusammenhang zwischen digitaler Transformation und Betriebssystemen?
+Begründen Sie Ihre Aussage anhand eines praktischen Beispiels.
+d) Cloud Computing kann als „großes Betriebssystem“ angesehen werden.
+Begründen Sie, warum dem so ist und nennen Sie 3 Gemeinsamkeiten von Cloud Computing und
+Betriebssystemen.
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+1
+
+Übungen
+
+Einführung und Geschichte
+
+2. Fragen zum Kapitel „Geschichte“:
+a) Erläutern Sie zwei Merkmale der ersten Rechnergeneration
+b) Erläutern Sie zwei Merkmale der vierten Rechnergeneration
+c) In der dritten Rechnergeneration kam unter Anderem das Feature MULTICS (Multiplexed Information and
+
+Computing Service) auf den Markt.
+Inwiefern kann man dieses Feature mit dem heute existierenden Cloud Computing vergleichen?
+d) Nennen und erläutern Sie drei neuartige Anforderungen beim Entwurf mobiler Betriebssysteme
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+2
+
+

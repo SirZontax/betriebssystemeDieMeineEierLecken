@@ -1,0 +1,172 @@
+Lösungen
+
+Einführung und Geschichte
+
+1.
+
+Fragen zum Kapitel „Einordnung und Motivation“:
+a)
+
+Nennen Sie zwei in der Vorlesung behandelte Teilgebiete der Informatik, die für Betriebssysteme von Bedeutung sind
+
+Lösungsvorschlag:
+Technische Informatik, Angewandte Informatik
+
+b)
+
+Erläutern Sie, inwiefern die beiden Teilgebiete in einem Betriebssystem zusammenhängen
+Lösungsvorschlag:
+
+Die technische Informatik beschäftigt sich mit hardwarenahen Themen, die komplex und aufwändig sind. Beispielsweise gilt es in diesem
+Zusammenhang, Gerätezugriffe auszuführen und hierfür vereinfachte Zugriffs-Schnittstellen für Software-Applikationen bereitzustellen.
+Diese Software-Applikationen werden mit Mitteln der Angewandten Informatik (z. B. Hochsprachen wie C#, Java, …) implementiert und
+betrachten Gerätezugriffe als transparent / kennen keine Details.
+Allgemein ausgedrückt besteht der Zusammenhang zwischen Technischer und Angewandter Informatik also darin, dass die Angewandte
+Informatik auf den Konzepten der Technischen Informatik aufbaut. Das Betriebssystem vermittelt dabei zwischen beiden Teilgebieten. Somit
+wird Komplexität abstrahiert und Zugriffe auf unterschiedlichste Hardware werden vereinheitlicht.
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+1
+
+Lösungen
+
+Einführung und Geschichte
+
+1.
+
+Fragen zum Kapitel „Einordnung und Motivation“:
+c)
+
+Inwiefern besteht ein Zusammenhang zwischen digitaler Transformation und Betriebssystemen? Begründen Sie Ihre Aussage anhand eines praktischen
+Beispiels.
+Lösungsvorschlag:
+Digitalisierung und digitale Transformation erhöhen insbesondere die Nachfrage an (Smart) Devices, die über speziell angepasste und vernetzungsfähige
+Betriebssysteme verfügen. Damit tragen letztere dazu bei, die für digitale Infrastrukturen erforderlichen Vernetzungs- und Konnektivitäts-Anforderungen zu
+erfüllen.
+
+Ein praktisches Beispiel hierfür stellen z. B. Smartwatches dar, welche inzwischen relativ präzise Gesundheitsdaten erfassen und auswerten können und
+(sofern erwünscht) zum sogenannten „Digital Me“ beitragen können. Andere repräsentative Beispiele sind z. B. logistische Anwendungen für digitale
+Zustellnachweise, Medizinische Geräte (bzw. deren Betriebssysteme) zur Erfassung großer, unstrukturierter Datenmengen und anschließender Analyse.
+d)
+
+Cloud Computing kann als „großes Betriebssystem“ angesehen werden.
+Begründen Sie, warum dem so ist und nennen Sie 3 Gemeinsamkeiten von Cloud Computing und Betriebssystemen.
+
+Lösungsvorschlag:
+Dies ist durch den konzeptionellen Aufbau und die Organisation beider Systeme gegeben, welche sich stark ähneln. Die erste Gemeinsamkeit stellen
+dabei die „unendlichen“ Rechenressourcen dar, welche in der Cloud durch einen sog. Hyperscaler bereitgestellt werden. Im Falle des Betriebssystems
+handelt es sich hierbei z. B. um CPU-Leistung oder Speicherkapazität, wobei mittels CPU-Scheduling und virtuellem Speicher den Prozessen (und dem
+Anwender) gegenüber die Illusion erzeugt wird, „unendlich“ Rechenressourcen zur Verfügung zu haben. (Forts. nächste Seite)
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+2
+
+Lösungen
+
+Einführung und Geschichte
+
+1.
+
+Fragen zum Kapitel „Einordnung und Motivation“:
+d)
+
+Forts. Lösungsvorschlag:
+Eine zweite Gemeinsamkeit ergibt aus der Anforderung an die automatische Skalierbarkeit. Dieses Merkmal ist beim Cloud Computing je
+nach gewähltem Bereitstellungsmodell für entsprechende Rechenressourcen gegeben. Im Falle des Betriebssystems stellt sich die Situation
+derart dar, dass eine laufende Programminstanz bei Bedarf z. B. weitere Speicherbereiche oder zusätzliche CPU-Kerne durch das
+Betriebssystem zugeteilt bekommen kann.
+
+Eine dritte Gemeinsamkeit ergibt sich z. B. aus dem Self-Service Portal welches für Cloud-Anwendungen zur Verfügung steht und eine
+unkomplizierte, intuitive und zumeist assistentengeführte Bereitstellung weiterer Ressourcen ermöglicht. Im Falle des Betriebssystems wird
+dies mit Hilfe der grafischen Benutzeroberfläche ebenfalls ermöglicht.
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+3
+
+Lösungen
+
+Einführung und Geschichte
+
+3.
+
+Geschichte:
+a)
+
+Erläutern Sie zwei Merkmale der ersten Rechnergeneration
+Lösungsvorschlag:
+In dieser Zeit kümmerten sich ein- und dieselben Menschen um Entwurf, Bau, Programmierung, Betrieb und Wartung der Rechner. Eine
+Teilung der Zuständigkeiten gab es nicht, sodass es eine hohe Abhängigkeit von Einzelpersonen gab.
+Damalige Programme wurden auf verdrahteten Steckkarten oder Lochkarten niedergeschrieben. Diese Programme bestanden aus einfachen
+
+Rechenoperationen, ein Betriebssysteme benötigte man noch nicht.
+
+b)
+
+Erläutern Sie zwei Merkmale der vierten Rechnergeneration
+Lösungsvorschlag:
+
+Zeitalter der Personal Computer wird eingeläutet. LSI-Schaltungen sorgen dafür, dass PCs zu günstigen Preisen in hohen Stückzahlen
+gefertigt werden können.
+Einführung der grafischen Benutzeroberflächen, die zunächst im Projekt Lisa fehlschlägt. Ein weiterer Anlauf mit dem Apple Macintosh führt
+dann jedoch aufgrund der hohen Benutzerfreundlichkeit zum Erfolg.
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+4
+
+Lösungen
+
+Einführung und Geschichte
+
+3.
+
+Geschichte:
+c)
+
+In der dritten Rechnergeneration kam unter Anderem das Feature MULTICS (Multiplexed Information and Computing Service) auf den Markt.
+
+Inwiefern kann man dieses Feature mit dem heute existierenden Cloud Computing vergleichen?
+Lösungsvorschlag:
+Bei MULTICS handelte es sich um eine große, leistungsstarke Rechenmaschine, die für alle Einwohner von Boston Rechenkapazität zu Verfügung stellte.
+Das heutige Cloud-Computing basiert auf genau derselben Idee, indem leistungsstarke Server in großen Rechenzentren ihre Leistung für unterschiedlich
+viele Kunden (sog. Tenants) und verschiedene Zwecke zur Verfügung stellen.
+So kann Rechenleistung effizienter ausgenutzt werden, da i.d.R. nur geringe Leerlaufzeiten (Idle) auf den Servern entstehen.
+Zudem müssen für überschaubare Workloads nicht jedes Mal komplette Server-Infrastrukturen aufgesetzt werden.
+→ Vgl. hierzu auch: SaaS, PaaS, IaaS (nicht Bestandteil dieser Vorlesung).
+d)
+
+Nennen und erläutern Sie drei neuartige Anforderungen beim Entwurf mobiler Betriebssysteme
+Lösungsvorschlag:
+1.
+
+Energiesparende Ausgestaltung: da mobile Betriebssysteme i.d.R. auf kompakten, akkubetriebenen Endgeräten zur Ausführung kommen und eine unterbrechungsfreie
+Stromversorgung nicht gewährleistet ist, müssen die besonders ressourcenschonend und energiesparend ausgestaltet werden.
+
+2.
+
+Geringer Festspeicher: aufgrund der kompakten Bauweise mobiler Endgeräte sind diese zumeist mit einem sehr viel kleineren Festspeicher ausgestattet, als dies bei stationären
+Endgeräten der Fall ist. Aus diesem Grund sollte das Betriebssystem selbst so wenig Speicherplatz wie möglich in Anspruch nehmen.
+
+3.
+
+Usability: Die bisher verwendeten Usability-Konzepte für Betriebssysteme finden in mobilen Betriebssystemen nur noch bedingt Anwendung, da mobile Endgeräte zumeist über
+Gesten-, Touch- und andere Eingabemöglichkeiten verfügen. Dementsprechend müssen für mobile Betriebssysteme neue, intuitive UI-Konzepte ausgearbeitet werden.
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+5
+
+

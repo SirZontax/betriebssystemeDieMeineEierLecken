@@ -1,0 +1,210 @@
+Lösungen
+
+Grundlagen der Betriebssysteme
+
+1.
+
+Fragen zum Kapitel „Grundlagen“:
+a)
+
+Definieren Sie den Begriff des Betriebssystems anhand einer Definition aus der Vorlesung
+Lösungsvorschlag:
+Software zur Überwachung und Steuerung der Hardwareressourcen eines Rechners, sowie zur Abstraktion von Komplexität.
+
+b)
+
+Erläutern Sie die zwei Sichten auf Betriebssysteme. Stellen Sie dabei klar den Fokus der jeweiligen Sichtweise heraus
+
+Lösungsvorschlag:
+Betriebssystem als erweiterte Maschine: „Man blickt von oben auf die Hardware“ und hat mit dem Betriebssystem eine Zwischenschicht,
+die Komplexität abstrahiert und einfache Schnittstellen für Anwenderprogramme in höheren Schichten bereitstellt.
+Betriebssystem als Ressourcenverwalter: „Man blickt aus Hardwaresicht auf die darüberliegenden Schichten“ und verwaltet
+
+Systembestandteile / Hardware für diese. Das BS stellt im allgemeinen Verwaltungsdienste für höher liegende Zugriffsschichten bereit.
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+1
+
+Lösungen
+
+Grundlagen der Betriebssysteme
+
+1.
+
+Grundlagen
+c)
+
+Erklären Sie die Zusammenhänge zwischen Hardware, Betriebssystem und Benutzerprogramm.
+Stellen Sie die Begriffe in einem Schichtendiagramm dar.
+Lösungsvorschlag:
+Das Betriebssystem ist die Komponente, die sich zwischen Benutzerprogrammen und Hardware
+einfügt. Vor diesem Hintergrund kommt dem Betriebssystem die Aufgabe zu, HW-Zugriffe
+eines Benutzerprogrammes zu koordinieren / synchronisieren und mit Hilfe von Treiber-Software
+
+durchzuführen. Dabei abstrahiert das BS die zugrundeliegende Komplexität und stellt den
+Anwenderprogrammen und Anwenders ein einfaches / klares Modell des Rechners zur Verfügung.
+
+d)
+
+Erläutern Sie die beiden Operationsmodi. Geben Sie an, in welchem Modus Betriebssystem und Benutzerprogramme jeweils ausgeführt
+werden.
+Lösungsvorschlag:
+Kernel-Modus: gilt exklusiv für das Betriebssystem und hat vollständigen Zugriff auf die gesamte Hardware sowie den verfügbaren
+Befehlssatz.
+Benutzer-Modus: Ausführmodus für Benutzerprogramme, der nur eingeschränkten Zugriff auf Hardware und Befehlssatz bietet.
+Eine Anwendung A hat z. B. in diesem Modus nicht die Berechtigung, den isolierten Speicherbereich von Anwendung B einzusehen.
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+2
+
+Lösungen
+
+Grundlagen der Betriebssysteme
+
+2.
+
+Fragen zum Kapitel „Hardware-Komponenten“:
+a)
+
+Erläutern Sie, welche Auswirkungen der Übergang von Einkern- zu Mehrkern-Prozessoren auf Betriebssysteme hat.
+
+Lösungsvorschlag:
+Das Betriebssystem muss Mechanismen bereitstellen, um die Arbeit von mehreren Ausführungsfäden bzw. Threads auf physikalisch verfügbare
+Rechenkerne zu verteilen. Zudem müssen Mechanismen für Thread-Synchronisation und –Kommunikation bereitgestellt werden.
+b)
+
+Erklären Sie den Begriff des Multithreading.
+Lösungsvorschlag:
+
+Multithreading ermöglicht eine parallele bzw. quasi-parallele Verarbeitung von Programmen, indem der Prozessor innerhalb eines Prozess-Zustandes
+zwischen mehreren Arbeits-Threads hin- und herschalten kann. Blockiert z. B. Thread A, weil er auf eine Anwender-Eingabe wartet, kann in der
+Zwischenzeit Thread B weiterarbeiten. Dadurch kann der Verarbeitungs-Durchsatz einer Anwendung erhöht werden.
+c)
+
+Inwiefern wird dem Betriebssystem beim Multithreading etwas vorgetäuscht?
+Lösungsvorschlag:
+
+Dem Betriebssystem wird mit Hilfe des Multithreading dann etwas vorgetäuscht, wenn durch den verwendeten Prozessor ein hardwareseitiges
+Multithreading durchgeführt wird. Die hierfür zugrundeliegende Technologie wird oft synonym zum Multithreading verwendet und bei Intel-Prozessoren als
+sog. Hyperthreading bezeichnet, wohingegen bei AMD-Prozessoren der Begriff des Simultaneous Multithreading (SMT) verwendet wird.
+Hierbei wird dem BS gegenüber vorgetäuscht, dass physikalisch mehr als ein Prozessorkern auf dem zugrundeliegenden System existiert. Infolgedessen
+verteilt das Betriebssystem Aufgaben auf mehrere Threads, zwischen denen so schnell hin- und her geschaltet wird, dass der Eindruck der parallelen
+Verarbeitung entsteht.
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+3
+
+Lösungen
+
+Grundlagen der Betriebssysteme
+
+2.
+
+Hardware-Komponenten
+d)
+
+Wird mit Multithreading echte Parallelität ermöglicht? Begründen Sie Ihre Aussage.
+
+Lösungsvorschlag:
+Dies hängt von der zugrundeliegenden Hardware ab. Auf einem System mit mehreren physikalisch vorhandenen Prozessorkernen kann mit Multithreading
+echte Parallelität ermöglicht werden. In Systemen mit einem einzigen Rechenkern wird das Multithreading durch schnelles hin- und her schalten zwischen
+den Threads ermöglicht, sodass Aufgaben nur quasi-parallel abgearbeitet werden.
+e)
+
+Nennen Sie die vier Arten von Speicher in absteigender Reihenfolge von schnell nach langsam anhand der Zugriffsgeschwindigkeit.
+
+Lösungsvorschlag:
+Register, Cache, Arbeitsspeicher (RAM), Festplatte
+
+f)
+
+Weshalb ist beim Zugriff auf die beiden langsamsten Speicherarten mit erhöhten Zugriffszeiten zu rechnen? Wie kann dies durch ein Betriebssystem
+optimiert werden?
+Lösungsvorschlag:
+Dies ist darin zu begründen, dass im Gegensatz zum CPU-Register und –Cache der Arbeitsspeicher und die Festplatte über den Datenbus erreicht
+werden müssen. Dabei stellt der Datenbus einen Flaschenhals dar, da er mit anderen Komponenten wie z. B. Grafikkarte, USB-Controller usw. geteilt wird
+(vgl. hierzu auch Folie 16). CPU-Register und –Cache hingegen sind direkt in der CPU verbaut und damit sehr schnell zugreifbar.
+Zudem sorgt der mechanische Aufbau einer Magnetplatte aufgrund der Verschiebungen des Schreib-/Lesekopfes für erhöhte Zugriffszeiten.
+Hier kann mit modernen Solid State Disks Abhilfe geschaffen werden, die anstelle mechanischer Komponenten auf Halbleiterbausteinen basieren.
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+4
+
+Lösungen
+
+Grundlagen der Betriebssysteme
+
+3.
+
+Fragen zum Kapitel „Aufgaben eines Betriebssystems“:
+a)
+
+Eine zentrale Aufgabe eines Betriebssystems besteht in der Abstraktion.
+Erklären Sie, was damit gemeint ist.
+Lösungsvorschlag:
+Das Betriebssystem abstrahiert insbesondere Komplexität im Zugriff auf Hardware. Dabei wird gegenüber Anwendungsentwicklern und EndAnwendern Detailwissen verborgen und Zugriffe mit APIs vereinheitlicht. Vor diesem Hintergrund spielt es z. B. für Anwender keine Rolle,
+
+welche Festplatte im System verbaut ist / von welchem Hersteller diese ist.
+
+b)
+
+Erläutern Sie den zur Abstraktion hilfreichen Maschinenbegriff nach Coy.
+Lösungsvorschlag:
+Coy betrachtet ein Rechensystem auf drei verschiedenen Abstraktions-Ebenen. Dabei stellt die Reale Maschine den niedrigsten
+
+Abstraktionsgrad dar. Hierunter versteht man ausschließlich CPU und Hardware-Geräte. Ein Abstraktionsniveau höher steht die sog.
+Abstrakte Maschine. Zu dieser Perspektive zählt zusätzlich zu den oben genannten noch das Betriebssystem. Das höchste
+Abstraktionsniveau betrachtet ergänzend noch Anwendungsprogramme und wird als Benutzermaschine bezeichnet.
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+5
+
+Lösungen
+
+Grundlagen der Betriebssysteme
+
+3.
+
+Aufgaben eines Betriebssystems
+c)
+
+Erklären Sie, welche Aufgaben das Betriebssystem im Sinne der Prozessverwaltung übernimmt.
+
+Lösungsvorschlag:
+Überwachung der Prozesse während deren Ausführung → Z. B. Unterbinden von Speicherzugriffs-Verletzungen
+Verwaltung von Prozess-Ressourcen, wie z. B. Dateien, Geräte-Zugriffe und anschließende Freigabe dieser, sodass sie durch andere
+Prozesse zugegriffen werden können.
+Ermöglichung des Prozess-Scheduling, sodass sich mehrere Prozesse eine CPU teilen können. Zudem Verwaltung des Multithreading zur
+Ermöglichung (quasi-) paralleler Programmausführung.
+
+d)
+
+Nennen und erläutern Sie zwei weitere Aufgaben eines Betriebssystems.
+Lösungsvorschlag:
+Speicherverwaltung: Abstraktion der Speicherhierarchie, sodass Speicherzugriffe schnellstmöglich erfolgen können, Herstellen von
+Speicherzugriffs-Sicherheit, Effiziente Speicherplatzverwaltung und Nutzung entstehender Freiräume / Defragmentierung
+Dateisystemverwaltung: Verwaltung aller angeschlossenen physikalischen und logischen Laufwerke,
+Partitionierung von Datenträgern, Bereitstellung von Caching-Mechanismen
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+6
+
+

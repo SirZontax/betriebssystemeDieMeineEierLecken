@@ -1,0 +1,1471 @@
+Vorlesung Betriebssysteme
+Abschnitt 3 – Prozessverwaltung
+Inhalt: Prozesse / Threads / Synchronisation / Interprozesskommunikation / Scheduling
+
+M.Sc. Patrick Eberle
+
+Verwendete Symbole
+
+Symbol
+
+Bedeutung
+Übung
+
+Beispiel
+
+Kommentar
+
+Definition
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+2
+
+Lernziele der Lerneinheit
+
+▪ Sie können erklären, warum Prozesse ein zentrales Konzept für Betriebssysteme darstellen
+▪ Sie kennen die Bedeutung von Prozesshierarchien, sowie die verschiedenen Prozesszustände
+und -übergänge
+▪ Sie kennen das einfache Prozessmodell und sind in der Lage, dieses anhand einer schematischen
+Darstellung zu erläutern
+▪ Sie wissen, was ein Multiprogrammiersystem ist und können dessen Funktionsweise und Vorteile
+erklären
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+3
+
+Kapitel VI
+Prozesse
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+4
+
+Prozesse
+
+Motivation (I)
+
+▪ Moderne Rechner sind in der Lage, mehrere Aktivitäten parallel bzw. quasi-parallel auszuführen
+▪ In letzterem Fall: Gegenüber dem Anwender wird Illusion erzeugt, dass der Rechner die Aufgaben
+parallel abarbeitet
+▪ Dabei wichtig: Unterscheidung zwischen CPU-Rechenzeit und I/O-Wartezeit
+• CPU-Rechenzeit: Prozessor führt tatsächliche Berechnungen durch
+• I/O-Wartezeit: Prozessor wartet auf Ergebnis von Eingabe- / Ausgabegerät und führt währenddessen
+keine Berechnungen durch
+
+▪ Wunsch: CPU kann während I/O-Wartezeit andere Berechnungen durchführen, um Zeit sinnvoll zu
+nutzen
+→ Zentrales Konzept für die Umsetzung: Prozesse
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+5
+
+Prozesse
+
+Motivation (II)
+
+Beispiel 4.1: Prozessverwaltung auf einem Webserver
+_________________________________________________________________________________
+Anfrage /
+Prozess
+
+Rechnen
+
+Warten auf I/O
+
+R
+Rechnen
+Rechnen
+
+Rechnen
+Zeit
+
+_________________________________________________________________________________
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+6
+
+Prozesse
+
+Grundlagen (I)
+
+▪ Prozesse stellen zentrales Konzept eines Betriebssystems dar:
+• Prozess abstrahiert Benutzerprogramm für das Betriebssystem
+• Prozess stellt laufende Instanz eines Benutzerprogramms dar
+• Bei Einkern-Prozessoren: Prozesse ermöglichen Quasi-Parallelität
+
+• Unter dem Begriff Quasi-Parallelität versteht man den schnellen Wechsel einer CPU zwischen den
+laufenden Programmen bzw. Prozessen
+• Quasi-Parallelität kann mit Hilfe eines Multiprogrammiersystems umgesetzt werden
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+7
+
+Prozesse
+
+Grundlagen (II)
+
+Definition 4.1: Prozess
+
+_________________________________________________________________________________
+Als Prozess wird ein Programm in Ausführung (= Programminstanz) bezeichnet.
+Im Prozess werden alle für die Ausführung des Programms benötigten Informationen und
+
+der aktuelle Ausführungsstatus abgespeichert.
+_________________________________________________________________________________
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+8
+
+Prozesse
+
+Grundlagen (III)
+
+▪ Differenzierung: Prozess vs. Programm
+• Prozess stellt Aktivität dar
+(vgl. Duden: „sich über eine gewisse Zeit erstreckender Vorgang […]“)
+• Programm ist „Rezept“ dafür, wie die Aktivität auszuführen ist
+
+• Programm kann auf Festspeicher abgelegt werden, Prozess ist flüchtig
+• Dabei gilt: Beziehung(Programm, Prozess) = 1 : (1..*)
+
+_______________________________________________________________________________________
+Der Prozess ist die Aktivität, die durch das Lesen des Programmes unter Berücksichtigung aller Eingaben,
+Ausgaben und des aktuellen Zustands entsteht.
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+9
+
+Prozesse
+
+Grundlagen (IV)
+Hauptspeicher
+
+▪ Aufbau eines Prozesses
+
+…
+5001
+5002
+…
+
+Aktive Prozesse
+
+15000
+15001
+
+PID: 0
+
+PID: 1
+PID: 2
+
+PID: 4
+
+PID: 3
+…
+
+…
+
+…
+
+Offene
+Dateien
+
+Ressourcen
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+10
+
+Prozesse
+
+Grundlagen (V)
+Prozesskontrollblock (PCB)
+
+▪ Aufbau eines Prozesses
+
+Aktive Prozesse
+PID: 0
+
+PID: 1
+PID: 2
+PID: 3
+
+PID: 4
+
+…
+
+…
+
+Prozesstabelle
+
+Prozessverwaltung
+
+Speicherverwaltung
+
+Dateiverwaltung
+
+Register
+
+Zeiger auf
+Textsegment bzw.
+Codesegment
+
+Wurzelverzeichnis
+
+Befehlszähler
+
+Zeiger auf
+Datensegment
+
+Arbeitsverzeichnis
+
+Programmstatuswort
+
+Zeiger auf
+Stacksegment
+
+Dateideskriptor
+
+Stackpointer
+
+…
+
+Benutzer-ID
+
+Prozesszustand
+
+Gruppen-ID
+
+Scheduling-Parameter
+
+…
+
+Priorität
+
+PCB(PID 0)
+
+Prozess-ID
+
+…
+
+Startzeit des
+Prozesses
+
+PCB(PID 4)
+
+…
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+11
+
+Prozesse
+
+Prozesserzeugung (I)
+
+▪ Aus Prozess vs. Programm geht hervor, dass ein Programm zur Ausführung einen Prozess benötigt
+▪ Daraus folgt: Betriebssystem muss Verfahren zur Prozesserzeugung bereitstellen
+• unter Beachtung der aktuellen System-Berechtigungen
+• je nach Bedarf
+
+• ggf. mit Übergabeparametern
+• mit bestimmter Priorität
+
+▪ Dabei: Unterscheidung zwischen zwei Prozess-Arten
+• Vordergrundprozesse: Laufen im Vordergrund, interagieren mit dem Benutzer
+Beispiele: E-Mail Client, Entwicklungsumgebung, …
+• Hintergrundprozesse: Laufen im Hintergrund, oftmals als System-Prozesse, auch „Daemons“ genannt
+Beispiele: Druckerwarteschlange, Lokaler Webserver, …
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+12
+
+Prozesse
+
+Prozesserzeugung (II)
+
+▪ Vier verschiedene Möglichkeiten der Prozesserzeugung:
+1. Bei System-Initialisierung:
+Der Prozess wird beim Systemstart erzeugt und ausgeführt
+
+2. Mittels Systemaufruf durch einen anderen Prozess:
+Ein bereits laufender Prozess führt einen Systemaufruf aus, der einen oder mehrere neue Prozesse erzeugt
+
+3. Mittels Benutzeranfrage zur Prozesserzeugung:
+
+Start eines Prozesses durch den Benutzer mittels Kommandozeile oder per Klick auf ein Anwendungssymbol
+
+4. Initiierung einer Stapelverarbeitung:
+Ausschließlich bei Stapelverarbeitungssystemen von Großrechnern
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+13
+
+Prozesse
+
+Prozesserzeugung (III)
+
+▪ Prozess-Erzeugung aus technischer Sicht:
+• Systeminterne Erzeugung eines Prozesses erfolgt immer durch bestehenden Prozess,
+der Systemaufruf zur Prozesserzeugung ausführt
+• Der bestehende Prozess (Aufruferkontext) ist dabei ein Element aus den in Prozesserzeugung
+vorgestellten Prozessen
+• Durch den Systemaufruf wird das Betriebssystem dazu aufgefordert,
+neuen Prozess zu erzeugen und auszuführendes Programm wird wie folgt übergeben:
+• Direkt bei Prozesserzeugung (Windows)
+• Indirekt nach Prozesserzeugung (UNIX)
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+14
+
+Prozesse
+
+Prozesserzeugung (IV)
+
+▪ Prozesserzeugung unter UNIX:
+• Systemaufruf: fork
+• Erzeugt exakte Kopie des aufrufenden Prozesses (im Folgenden: Eltern-Prozess) mit:
+• Demselben Speicherabbild
+
+• Denselben Umgebungsvariablen
+• Den gleichen geöffneten Dateien
+
+• Zum wechseln des auszuführenden Programmes: execve
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+15
+
+Prozesse
+
+Prozesserzeugung (V)
+
+▪ Prozesserzeugung unter Windows:
+• Systemaufruf (Win32): CreateProcess
+• Erzeugt exakte Kopie des aufrufenden Prozesses / Elternprozesses mit:
+• Demselben Speicherabbild
+
+• Denselben Umgebungsvariablen
+• Den gleichen geöffneten Dateien
+
+• CreateProcess ermöglicht Prozesserzeugung und laden des auszuführenden Programmes
+in einem Schritt
+• CreateProcess enthält 10 Parameter, darunter u. a.:
+Kommandozeilenparameter, Sicherheitsattribute, Bits für Vererbung geöffneter Dateien,
+Priorität, …
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+16
+
+Prozesse
+
+Prozesserzeugung (VI)
+
+▪ Adressräume nach Prozesserzeugung:
+• Grundsätzlich: Eltern- und Kind-Prozess haben getrennte, voneinander isolierte Adressräume
+• Jedoch: manche UNIX-Implementierungen stellen Ausnahme nach dem Copy-on-Write Prinzip dar:
+• Kind-Prozess nutzt dabei selben Speicherbereich wie Eltern-Prozess
+
+• Bei Veränderung durch einen der beiden Prozesse geschieht folgendes:
+1. Betroffener Speicherblock wird in privaten, dem Prozess zugehörigen Bereich kopiert
+2. Änderungen wirken sich nur auf den privaten Speicherbereich des Prozesses aus,
+der andere Prozess bekommt Änderungen nicht mit
+
+• Dadurch Verringerung des Speicheraufwands
+
+• Weitere Ausnahme unter UNIX: Speicherbereich mit Programmtext wird von den Prozessen geteilt,
+da ohnehin read-only
+• Unter Windows: Adressräume von Eltern- und Kind-Prozess von Anfang an separiert
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+17
+
+Prozesse
+
+Prozessbeendigung (I)
+
+▪ Nach Bearbeitung seiner Aufgabe wird Prozess i. d. R. wieder beendet
+▪ Dabei: vier verschiedene Möglichkeiten der Prozess-Terminierung:
+1. Normales Beenden:
+Dem Betriebssystem wird mittels Systemaufruf die ordnungsgemäße Abarbeitung des Programms
+mitgeteilt (UNIX: exit, Windows: exitProcess)
+2. Freiwilliges Beenden aufgrund eines Fehlers:
+Das ausgeführte Programm stellt eine Unregelmäßigkeit im Programmablauf fest, teilt dies dem Benutzer
+mit (Logging, Konsolenausgabe, …) und beendet sich selbst
+
+3. Unfreiwilliges Beenden aufgrund eines Fehlers:
+Das ausgeführte Programm wird durch einen schwerwiegenden Fehler unterbrochen
+(Programmierfehler: Speicherzugriffsverletzung oder Pufferüberlauf, Division durch null, …)
+und vom Betriebssystem beendet
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+18
+
+Prozesse
+
+Prozessbeendigung (II)
+
+4. Unfreiwillige Beendigung durch einen anderen Prozess:
+
+Ein anderer Prozess führt einen Systemaufruf aus, mit dem er das Betriebssystem auffordert,
+den Prozess zu beenden (UNIX: kill, Windows: TerminateProcess)
+• Aufrufender Prozess benötigt zwingend entsprechende Berechtigung zur Beendigung
+des anderen Prozesses
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+19
+
+Prozesse
+
+Prozesshierarchien (I)
+
+▪ Aus dem Vorhandensein von Eltern- und Kind-Prozessen ergibt sich, dass Prozesse eine Art
+
+Hierarchie einnehmen können
+▪ Dabei gilt: Ein Kind-Prozess weist nur einen Elternteil auf, und nicht wie in der Natur üblich zwei
+
+1
+2
+
+4
+
+7
+Patrick Eberle
+
+3
+
+5
+8
+
+6
+
+Betrachteter
+Prozess
+
+Eltern-Prozess
+
+KindProzess(e)
+
+1
+
+-
+
+2, 3
+
+2
+
+1
+
+4, 5, 6
+
+3
+
+1
+
+-
+
+4
+
+2
+
+7, 8
+
+5
+
+2
+
+-
+
+6
+
+2
+
+-
+
+7
+
+4
+
+-
+
+8
+
+4
+
+-
+
+Vorlesung Betriebssysteme
+
+20
+
+Prozesse
+
+Prozesshierarchien (II)
+
+▪ Relevanz von Prozesshierarchien unter UNIX:
+• Signale / Kommunikation:
+• Prozess-Hierarchie wird als Prozessfamilie aufgefasst
+• Signale werden an alle Prozesse, die Bestandteil der Familie sind, gesendet
+• Jeder Prozess der Familie entscheidet für sich selbst, wie ankommendes Signal verarbeitet wird
+
+• Init-Prozess:
+• UNIX initialisiert sich direkt nach dem Systemstart mit Hilfe des init Prozesses selbst
+• Alle nachfolgenden Prozesse werden vom init Prozess abgespalten
+• Dadurch:
+init Prozess ist Eltern-Prozess aller Prozesse innerhalb des Systems ⟺
+es existiert nur genau ein Prozessbaum, dessen Root-Element der init Prozess ist
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+21
+
+Prozesse
+
+Prozesshierarchien (III)
+
+▪ Einschub: Signale und Kommunikation
+• Signale stellen eine Möglichkeit zur Interprozess-Kommunikation dar, die auf Software-Interrupts basiert
+• Prozess-Sicherheit: Ein Prozess kann Signale nur an Mitglieder seiner eigenen Prozessgruppe bzw.
+Prozess-Familie senden
+
+• Mitglieder sind dabei: der Elternprozess (und weitere Vorfahren), Geschwister, Kinder und weitere
+Nachfahren
+
+• Prozesse können dem System mitteilen, was bei einem ankommenden Signal passieren soll:
+1.
+
+Signal ignorieren
+
+2.
+
+Signal abfangen (und entsprechende Behandlungsroutine implementieren)
+
+3.
+
+Prozess beenden
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+22
+
+Prozesse
+
+Prozesshierarchien (IV)
+
+▪ Einschub: Signale und Kommunikation
+• Beispielhafter Auszug über vom POSIX-Standard geforderte Signale:
+Signal
+
+Ursache
+
+SIGALRM
+
+Zeitgeber löst Alarm aus
+
+SIGFPE
+
+Gleitkommafehler aufgetreten, z. B. Teilen
+durch 0
+
+SIGKILL
+
+Abbruch des Prozesses, der nicht abgefangen
+oder ignoriert werden kann
+
+SIGSEGV
+
+Prozess hat ungültige Speicheradresse
+referenziert
+
+SIGTERM
+
+Anfrage nach einem geregelten Beenden des
+Prozesses
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+23
+
+Prozesse
+
+Prozesshierarchien (V)
+
+▪ Relevanz von Prozesshierarchien unter Windows:
+• Keine explizite hierarchische Anordnung
+• Alle Prozesse gleichwertig
+• Eine implizite Prozesshierarchie wird mit Hilfe spezieller Tokens (auch Handle genannt) erreicht:
+• Eltern-Prozess erhält das Token bei der Erzeugung eines Kind-Prozesses, um diesen zu steuern
+• Eltern-Prozess kann Token an anderen Prozess weitergeben (Kind-Prozess enterben),
+wodurch die Hierarchie außer Kraft gesetzt wird
+→ UNIX erlaubt dies nicht und erzwingt damit Einhaltung der Prozess-Hierarchie
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+24
+
+Prozesse
+
+Prozesszustände (I)
+
+▪ Wie aus Motivation hervorgeht, ist (Quasi-) Parallelität in modernen Systemen wichtiges Merkmal
+▪ Prozesszustände bilden Grundlage zur Umsetzung der (Quasi-) Parallelität,
+indem sie Auskunft über Rechenbereitschaft eines Prozesses geben
+▪ Dabei: Unterscheidung zwischen drei Zuständen eines Prozesses:
+• Rechnend (Running):
+Der Prozess verarbeitet Befehle auf dem Prozessor
+• Rechenbereit (Ready):
+
+Die Befehlsverarbeitung des Prozesses wurde vorrübergehend pausiert,
+um anderen Prozess rechnen zu lassen
+• Blockiert (Blocked):
+Der Prozess wartet auf ein externes Signal / Ereignis und pausiert die weitere Befehlsverarbeitung
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+25
+
+Prozesse
+
+Prozesszustände (II)
+
+▪ Einfaches Prozessmodell:
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+26
+
+Prozesse
+
+Prozesszustände (III)
+
+▪ Prozesse im Prozessmodell teilen sich physikalisch vorhandene CPU(s)
+▪ Sogenannter Prozess-Scheduler übernimmt zentrale Aufgabe der Rechenzeit-Zuteilung
+▪ Dabei: Änderung der Prozess-Zustände erfolgt durch sogenannten Kontextwechsel:
+einem Prozess wird Rechenzeit entzogen, ein anderer erhält die CPU zugeteilt
+▪ Die Zustandsinformationen des Prozesses werden in einer speziellen Tabelle, dem sogenannten
+Process Control Block gespeichert. Darunter sind z. B.: Prozess-Priorität, Zeiger auf ProzessWarteschlangen, …)
+▪ Im Folgenden: Schematische Darstellung der grundsätzlichen Vorgehensweise beim
+Zustandsübergang
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+27
+
+Prozesse
+
+Prozesszustände (IV)
+
+▪ Initial-Zustand: Prozess 3 hat Prozessor zugeteilt und wird ausgeführt
+
+CPU
+
+Warteschlange
+Prozess 1
+Ready
+
+Patrick Eberle
+
+Prozess 2
+Ready
+
+Prozess 3
+Running
+
+Prozess n
+Blocked
+
+Vorlesung Betriebssysteme
+
+28
+
+Prozesse
+
+Prozesszustände (V)
+
+▪ Festplatteninterrupt tritt auf, Prozess n erhält Daten für weitere Verarbeitung
+
+→ Zustandsübergang von Blocked nach Ready
+
+Warteschlange
+Prozess 1
+Ready
+
+Prozess 2
+Ready
+
+Prozess n
+Blocked →
+Ready
+
+CPU
+Prozess 3
+Running
+
+29
+
+Prozesse
+
+Prozesszustände (VI)
+
+▪ Prozess-Scheduler unterbricht Prozess 3 und lässt Prozess n weiterarbeiten
+
+→ Prozess n: Zustandsübergang von Ready nach Running
+→ Prozess 3: Zustandsübergang von Running nach Ready
+CPU
+
+Warteschlange
+Prozess 3
+Running →
+Ready
+
+Patrick Eberle
+
+Prozess 2
+Ready
+
+Prozess n
+
+Prozess 1
+Ready
+
+Ready → Running
+
+Vorlesung Betriebssysteme
+
+30
+
+Prozesse
+
+Prozesszustände (VII)
+
+▪ Prozess n hat Rechenzeit erhalten, alle anderen Prozesse sind rechenbereit
+
+CPU
+
+Warteschlange
+Prozess 3
+Ready
+
+Patrick Eberle
+
+Prozess 2
+Ready
+
+Prozess n
+Running
+
+Prozess 1
+Ready
+
+Vorlesung Betriebssysteme
+
+31
+
+Kapitel VII
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+32
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Motivation
+
+▪ Bisher: Einführung des Begriffes der Quasi-Parallelität und des Zeitmultiplexing.
+
+„Dem Benutzer gegenüber wird die Illusion erzeugt, dass mehrere Dinge parallel ablaufen.“
+▪ Dabei: Keine Aussage über die betriebssystemseitige Umsetzung bzw. Implementierung von QuasiParallelität
+▪ Antwort darauf gibt der Mehrprogrammbetrieb
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+33
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Grundlagen (I)
+
+▪ Einprogrammbetrieb und Mehrprogrammbetrieb sind sogenannte Betriebsarten eines
+
+Betriebssystems
+▪ Die Betriebsart eines Betriebssystems gibt Aufschluss über:
+• Art der Aufgabenverarbeitung: sequenziell, quasi-parallel oder parallel
+• Aufteilung des Hauptspeichers in Prozessräume
+• Notwendigkeit von Scheduling
+
+▪ Daher zunächst: Definition der Begriffe Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+34
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Grundlagen (II)
+
+Definition 5.1: Einprogrammbetrieb
+
+_________________________________________________________________________________
+Unter dem Einprogrammbetrieb versteht man die Betriebsart eines Rechnersystems,
+in der zu einer Zeit nur ein einziges Programm in den Speicher geladen und ausgeführt werden kann.
+
+Es findet folglich keine parallele und auch keine quasi-parallele Verarbeitung statt.
+_________________________________________________________________________________
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+35
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Grundlagen (III)
+
+Definition 5.2: Mehrprogrammbetrieb
+
+_________________________________________________________________________________
+Unter dem Mehrprogrammbetrieb (auch: Multiprogramming, Multiprogrammierung) versteht man
+die Betriebsart eines Rechnersystems, in der zu einer Zeit mehrere Programme in den Speicher
+
+geladen und quasi-parallel oder echt-parallel ausgeführt werden können.
+_________________________________________________________________________________
+
+Entgegen der Darstellung mancher Fachbücher entspricht der
+Mehrprogrammbetrieb nicht zwangsläufig dem Multiprocessing
+und sollte daher nicht synonym verwendet werden (Vgl. hierzu:
+Definition Multiprocessing).
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+36
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Grundlagen (IV)
+
+▪ In der Praxis oftmals: Ähnliche oder gar synonyme Verwendung der Begriffe
+
+Multiprogrammierung, Multitasking und Multiprocessing, welche sich auf Prozesse beziehen
+▪ Weiterer Begriff: Multithreading, bezieht sich auf Threads
+▪ Tatsächlich bestehen Unterschiede zwischen den Begriffen, die im Folgenden
+näher erläutert werden
+▪ Zunächst jedoch:
+Betrachtung der Funktionsweise des Einprogrammbetriebs bzw. Uniprogramming und des
+Mehrprogrammbetriebs bzw. Multiprogramming
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+37
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Einprogrammbetrieb (I)
+
+▪ Einprogrammbetrieb: Uniprogramming
+• Uniprogramming ist ursprüngliche Betriebsart zur Programmverwaltung
+• Im Hauptspeicher befindet sich zu einem Zeitpunkt nur ein einziges Programm
+→ Keine Speicherunterteilung in Prozessspeicherbereiche
+
+• Auf dem Prozessor kann zu einem Zeitpunkt nur ein einziger Prozess ausgeführt werden
+• Ein Programm wird vom Start bis zur Terminierung unterbrechungsfrei ausgeführt,
+bevor das nächste Programm geladen und ausgeführt wird
+• Uniprogramming heute bis auf wenige Einzelfälle (einfache Embedded Systeme) nicht mehr vorzufinden
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+38
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Einprogrammbetrieb (II)
+
+▪ Schematische Darstellung des Uniprogramming
+
+Speicher
+CPU
+
+Betriebssystemspeicher
+
+Prozess 1
+
+Speicherbereich
+Prozess 1
+Freier
+Speicher
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+39
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Einprogrammbetrieb (III)
+
+▪ Bewertung des Uniprogramming:
+Einfache Prozessverwaltung
+• Kein Verwaltungsaufwand für Hin- und herschalten zwischen Prozessen (Kontextwechsel, Scheduling)
+• Keine konkurrierenden Zugriffe
+
+Einfache Speicherverwaltung
+• Keine Speicherunterteilung erforderlich
+• Keine Speicherzugriffsverletzungen zwischen Benutzerprozessen möglich
+
+Keine effiziente Prozessor-Auslastung: Wartet Befehlsausführung auf I/O-Operation, befindet sich
+Prozessor im Leerlauf
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+40
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (I)
+
+▪ Mehrprogrammbetrieb: Multiprogramming
+• Multiprogrammierung liefert Antwort auf schlechte Prozessor-Effizienz beim Uniprogramming
+• Hiermit: Ermöglichung des Mehrprogrammbetriebs unter Einkern-Prozessorsystemen
+• Idee:
+
+Ein Prozess wird so lange auf der CPU ausgeführt, bis er blockiert oder terminiert. Danach wird dem
+nächsten Prozess CPU-Rechenzeit zugeteilt.
+• Anzahl x der geladenen Prozesse wird als Grad bezeichnet:
+„Der Grad der Multiprogrammierung ist x“
+• Dadurch: Effizientere Ausnutzung des Prozessors → Leerlaufzeiten werden auf ein Minimum reduziert
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+41
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (II)
+
+▪ Schematische Darstellung der Multiprogrammierung
+Speicher
+Warteschlange
+Prozess 3
+Blocked
+
+Prozess 2
+Ready
+
+CPU
+
+Betriebssystemspeicher
+
+Prozess 1
+Running
+
+Speicherbereich
+Prozess 1
+Speicherbereich
+Prozess 2
+Speicherbereich
+Prozess 3
+…
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+42
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (III)
+
+▪ Effizienz der Multiprogrammierung
+
+• Multiprogrammierung ermöglicht mittels quasiparalleler Verarbeitung effiziente Auslastung der Ressourcen:
+• Prozessor: Reduzierung der Leerlaufzeiten, Erhöhung der Arbeitslast
+
+• Speicher: Zur Verfügung stehender Hauptspeicher wird besser ausgenutzt, da mehrere Prozesse gleichzeitig
+geladen werden können
+
+• Im Folgenden: Quantifizierung der Effizienz mit Hilfe rechnerischer Methoden
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+43
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (IV)
+
+▪ Effizienzverhalten beim Multiprogramming
+• Annahme: Alle Prozesse im Hauptspeicher warten niemals gleichzeitig auf I/O-Operationen
+(anders ausgedrückt: es ist immer mindestens ein Prozess rechenbereit)
+
+• Gegeben:
+
+Prozentsatz p
+
+= Durchschnittlicher zeitlicher Anteil, den ein Prozess im
+rechnenden Zustand verbringt, gemessen an der Gesamtverweildauer
+des Prozesses im Hauptspeicher
+
+• Dann ergibt sich der Grad der Multiprogrammierung zur effizienten Auslastung des Prozessors zu
+
+GradEffiziente Auslastung = 1 / p
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+44
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (V)
+
+▪ Probabilistischer Ansatz zum Effizienzverhalten beim Multiprogramming
+• Stellt bessere Herangehensweise zur Messung der CPU-Effizienz dar
+→ beruht nicht auf der Annahme, dass alle Prozesse niemals gleichzeitig auf I/O-Operationen warten
+• Stattdessen:
+Betrachtung der Eintrittswahrscheinlichkeit für den Worst-Case (alle Prozesse warten gleichzeitig auf I/O)
+mit:
+Prozentsatz p
+
+= Durchschnittlicher zeitlicher Anteil, den ein Prozess auf I/O wartet
+
+Anzahl n
+
+= Anzahl der Prozesse im Speicher
+
+• Dann ergibt sich die CPU-Ausnutzung wie folgt:
+
+CPU-Ausnutzung = 1 - pn
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+45
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (VI)
+
+▪ Probabilistischer Ansatz zum Effizienzverhalten beim Multiprogramming
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+46
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (VII)
+
+Definition 5.3: Multiprogrammiersystem
+
+_________________________________________________________________________________
+In einem Multiprogrammiersystem wechselt die CPU schnell zwischen den laufenden Programmen
+hin und her. Zu einem Zeitpunkt läuft dabei immer nur ein einziger Prozess auf der CPU.
+_________________________________________________________________________________
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+47
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (VIII)
+
+Multiprogrammiersystem: Merkmale
+
+• Rechendauer pro Programm: 10 – 100 Millisekunden / Time Slot
+• Schneller Wechsel zwischen den Programmen
+→ Illusion der Parallelität, weshalb man von Quasi-Parallelität oder
+Pseudoparallelität spricht (da das System ja nicht echt parallel arbeitet)
+• Zu einem Zeitpunkt: Verarbeitung eines einzigen Programms
+bzw. Prozesses
+
+• Es können im Vorfeld keine Annahmen über zeitlichen Verlauf eines Prozesses
+gemacht werden → ungleichmäßige und schwer nachvollziehbare Prozesswechsel
+• Gegenteil: Uniprogrammiersystem, bei dem Prozesse sequenziell, vollständig und ohne Unterbrechung
+nacheinander abgearbeitet werden
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+48
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (VIIII)
+
+Multiprogrammiersystem: Bewertung
+
+Effiziente Nutzung des Prozessors durch Vermeidung von I/O-Wartezeiten
+Gegenüber dem Anwender: Illusion der parallelen Verarbeitung / bessere „Performance“
+
+Überblick über mehrere parallele Vorgänge zu behalten ist komplexe Aufgabe
+
+Hin- und herschalten zwischen Prozessen (→ Kontextwechsel) ist aufwändig und kostet Zeit
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+49
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (X)
+
+▪ Begrifflichkeiten im Ein- und Mehrprogrammbetrieb
+Einprogrammbetrieb
+
+ist Gegenteil zu
+
+Mehrprogrammbetrieb
+
+Patrick Eberle
+
+ist Betriebsart von
+
+Parallelbetrieb
+
+ist Betriebsart von
+
+Quasiparalleler
+Betrieb
+
+Multithreading
+
+Multiprocessing
+
+Vorlesung Betriebssysteme
+
+50
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (XI)
+
+Definition 5.4: Multitasking
+
+_________________________________________________________________________________
+In einem Multitasking-System teilen sich mehrere Tasks (nicht näher definiert, was ein Task ist)
+gemeinsame Ressourcen, wie beispielsweise den Prozessor mit Hilfe von Time-Sharing
+
+Mechanismen. Das Betriebssystem übernimmt dabei die Aufgabe des schnellen hin- und herschaltens
+zwischen den Tasks (= Scheduling), sodass der Eindruck der Parallelität entsteht.
+_________________________________________________________________________________
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+51
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (XII)
+
+Definition 5.5: Singlethreading
+
+_________________________________________________________________________________
+Beim Singlethreading wird zu jedem Zeitpunkt nur genau ein Task auf einmal bearbeitet.
+Der Task wird dabei ohne Unterbrechung durch einen anderen Task von Anfang bis Ende
+
+abgearbeitet.
+_________________________________________________________________________________
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+52
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (XIII)
+
+▪ Singlethreading
+
+Quelle: http://www.ni.com/white-paper/6424/de/
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+53
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (XIII)
+Applications
+P1
+
+▪ Singlethreading
+
+P2
+
+OS
+
+CPU
+Core
+P1
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+54
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (XIV)
+
+Definition 5.6: Multithreading
+
+_________________________________________________________________________________
+Beim Multithreading wird das Konzept des Multitasking auf ein Benutzerprogramm abgebildet.
+Dementsprechend ermöglicht das Multithreading die parallele bzw. quasi-parallele Verarbeitung
+
+innerhalb einer Anwendung. Das Betriebssystem verteilt dann die Rechenzeit nicht nur auf
+verschiedene Anwendungen, sondern zusätzlich auf die verschiedenen Ausführungsfäden der
+jeweiligen Anwendungen.
+
+_________________________________________________________________________________
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+55
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (XV)
+
+▪ Multithreading
+
+Quelle: http://www.ni.com/white-paper/6424/de/
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+56
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (XV)
+Applications
+P1
+
+▪ Multithreading
+
+P3
+
+P2
+
+OS
+
+CPU
+Core 1
+P1
+
+Patrick Eberle
+
+Core 2
+P1
+
+Vorlesung Betriebssysteme
+
+Core 3
+P2
+
+Core 4
+P2
+
+57
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (XVI)
+
+Definition 5.7: Multiprocessing
+
+_________________________________________________________________________________
+Beim Multiprocessing wird das Konzept des Multitasking auf eine echt-parallele Verarbeitung
+erweitert. Dies wird ermöglicht durch die Ausführung auf einem Multicore-System, welches über
+
+mehrere physikalische Prozessoren verfügt. Die Verarbeitung der einzelnen Tasks erfolgt dabei
+unabhängig voneinander.
+_________________________________________________________________________________
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+58
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (XVII)
+
+▪ Multiprocessing
+
+Quelle: http://www.ni.com/white-paper/6424/de/
+
+Patrick Eberle
+
+Vorlesung Betriebssysteme
+
+59
+
+Einprogrammbetrieb und Mehrprogrammbetrieb
+
+Mehrprogrammbetrieb (XVII)
+Applications
+P1
+
+▪ Multiprocessing
+
+P3
+
+P2
+
+OS
+
+CPU 1
+
+CPU 2
+
+Core 1
+P1
+
+Patrick Eberle
+
+Core 2
+P1
+
+Vorlesung Betriebssysteme
+
+Core 3
+P2
+
+Core 4
+P2
+
+60
+
+Zusammenfassung
+
+▪ Gegenüberstellung der Begrifflichkeiten (synonym verwendete in derselben Farbe)
+[Anzahl Kerne]
+
+Multithreading
+
+Mehrkern
+
+MultiProcessing
+Multithreading
+
+Einkern
+SingleThreading
+
+Multithreading
+
+[Grad der Parallelität]
+
+keine
+Patrick Eberle
+
+quasi-parallel
+
+echt-parallel
+
+Vorlesung Betriebssysteme
+
+61
+
+
