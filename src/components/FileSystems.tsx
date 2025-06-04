@@ -256,7 +256,7 @@ const FileSystems: React.FC = () => {
             <div className="text-blue-700 space-y-2">
               <p>F.66 nicht praktisch aber Wissensfrage - zeichnen Sie auf MBR vs GPT</p>
               <p><strong>MBR:</strong> Bis 4 Partitionen, max 2TB, Legacy BIOS</p>
-              <p><strong>GPT:</strong> Bis 128 Partitionen, >2TB, UEFI</p>
+              <p><strong>GPT:</strong> Bis 128 Partitionen, {'>'} 2TB, UEFI</p>
             </div>
           </div>
         </div>
