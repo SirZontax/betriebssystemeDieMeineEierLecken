@@ -720,13 +720,154 @@ const ProcessScheduling: React.FC = () => {
           </div>
 
           <div className="bg-white p-4 rounded border">
-            <h5 className="font-medium text-indigo-800 mb-3">🔍 Beispiel-Analyse (FCFS):</h5>
-            <div className="text-sm text-indigo-700 space-y-2">
-              <p><strong>Schritt 1:</strong> P1 kommt zur Zeit 0 an → sofort auf CPU (keine Wartezeit)</p>
-              <p><strong>Schritt 2:</strong> P2 kommt zur Zeit 1 an → muss warten, da P1 noch läuft (gestrichelt)</p>
-              <p><strong>Schritt 3:</strong> P1 fertig bei Zeit 8 → P2 kann starten (Ende der gestrichelten Phase)</p>
-              <p><strong>Schritt 4:</strong> P3 und P4 warten ebenfalls in der Ready-Queue (gestrichelte Bereiche)</p>
-              <p><strong>Ergebnis:</strong> Lange Wartezeiten für spätere Prozesse → Convoy-Effekt sichtbar!</p>
+            <h5 className="font-medium text-indigo-800 mb-3">🔍 Detailliertes Beispiel (FCFS):</h5>
+            <div className="text-sm text-indigo-700 space-y-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <p><strong>Gegeben:</strong></p>
+                  <ul className="text-xs mt-1 space-y-1">
+                    <li>• P1: Ankunft=0, Burst=8</li>
+                    <li>• P2: Ankunft=1, Burst=4</li>
+                    <li>• P3: Ankunft=2, Burst=9</li>
+                    <li>• P4: Ankunft=3, Burst=5</li>
+                  </ul>
+                </div>
+                <div>
+                  <p><strong>FCFS-Regel:</strong></p>
+                  <p className="text-xs mt-1">First Come First Served - Wer zuerst kommt, wird zuerst bedient!</p>
+                </div>
+              </div>
+              
+              <div className="space-y-2 border-t pt-3">
+                <p><strong>⏰ Zeit 0:</strong> P1 kommt an (grüne Linie) → CPU ist frei → P1 startet sofort (blauer Block)</p>
+                <p><strong>⏰ Zeit 1:</strong> P2 kommt an (grüne Linie) → P1 läuft noch → P2 muss warten (gestrichelte Linie beginnt)</p>
+                <p><strong>⏰ Zeit 2:</strong> P3 kommt an (grüne Linie) → P1 läuft noch → P3 muss auch warten (gestrichelte Linie)</p>
+                <p><strong>⏰ Zeit 3:</strong> P4 kommt an (grüne Linie) → P1 läuft noch → P4 muss auch warten (gestrichelte Linie)</p>
+                <p><strong>⏰ Zeit 8:</strong> P1 fertig → P2 aus Ready-Queue holen → P2 startet (gestrichelte Linie wird blau)</p>
+                <p><strong>⏰ Zeit 12:</strong> P2 fertig → P3 aus Ready-Queue holen → P3 startet (gestrichelte Linie wird blau)</p>
+                <p><strong>⏰ Zeit 21:</strong> P3 fertig → P4 aus Ready-Queue holen → P4 startet (gestrichelte Linie wird blau)</p>
+                <p><strong>⏰ Zeit 26:</strong> P4 fertig → Alle Prozesse abgearbeitet</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-rose-50 p-6 rounded-lg border border-rose-200">
+          <h4 className="font-semibold text-rose-800 mb-4">🎯 Was passiert genau beim Warten und bei Ereignissen?</h4>
+          
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h5 className="font-medium text-rose-800 mb-3">🚩 Ereignis (Grüne Linie):</h5>
+                <div className="space-y-2 text-sm text-rose-700">
+                  <div className="bg-white p-3 rounded border">
+                    <p><strong>Was passiert:</strong> Prozess wird vom Betriebssystem "geboren"</p>
+                    <p className="text-xs mt-1">→ Benutzer startet Programm, fork() wird aufgerufen, etc.</p>
+                  </div>
+                  <div className="bg-white p-3 rounded border">
+                    <p><strong>System-Aktion:</strong> PCB (Process Control Block) wird erstellt</p>
+                    <p className="text-xs mt-1">→ PID vergeben, Speicher reservieren, in Ready-Queue einreihen</p>
+                  </div>
+                  <div className="bg-white p-3 rounded border">
+                    <p><strong>Zustand:</strong> NEW → READY</p>
+                    <p className="text-xs mt-1">→ Prozess ist bereit zur Ausführung, wartet auf CPU</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-rose-800 mb-3">⏳ Wartephase (Gestrichelte Linie):</h5>
+                <div className="space-y-2 text-sm text-rose-700">
+                  <div className="bg-white p-3 rounded border">
+                    <p><strong>Was passiert:</strong> Prozess steht in der Ready-Queue</p>
+                    <p className="text-xs mt-1">→ Wie in einer Warteschlange im Supermarkt</p>
+                  </div>
+                  <div className="bg-white p-3 rounded border">
+                    <p><strong>System-Aktion:</strong> Scheduler prüft regelmäßig die Queue</p>
+                    <p className="text-xs mt-1">→ "Wer ist als nächstes dran?" - je nach Algorithmus</p>
+                  </div>
+                  <div className="bg-white p-3 rounded border">
+                    <p><strong>Zustand:</strong> READY (bereit, aber wartend)</p>
+                    <p className="text-xs mt-1">→ Prozess kann sofort laufen, wenn CPU frei wird</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h5 className="font-medium text-rose-800 mb-3">🔵 Ausführungsphase (Blauer Block):</h5>
+                <div className="space-y-2 text-sm text-rose-700">
+                  <div className="bg-white p-3 rounded border">
+                    <p><strong>Was passiert:</strong> Prozess "besitzt" die CPU</p>
+                    <p className="text-xs mt-1">→ Befehle werden nacheinander abgearbeitet</p>
+                  </div>
+                  <div className="bg-white p-3 rounded border">
+                    <p><strong>System-Aktion:</strong> Context-Switch wird durchgeführt</p>
+                    <p className="text-xs mt-1">→ Register laden, MMU umschalten, Ausführung starten</p>
+                  </div>
+                  <div className="bg-white p-3 rounded border">
+                    <p><strong>Zustand:</strong> RUNNING (laufend)</p>
+                    <p className="text-xs mt-1">→ Nur EIN Prozess kann gleichzeitig RUNNING sein!</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-rose-800 mb-3">✅ Ende der Ausführung:</h5>
+                <div className="space-y-2 text-sm text-rose-700">
+                  <div className="bg-white p-3 rounded border">
+                    <p><strong>Was passiert:</strong> Prozess beendet sich (exit())</p>
+                    <p className="text-xs mt-1">→ Alle Berechnungen abgeschlossen</p>
+                  </div>
+                  <div className="bg-white p-3 rounded border">
+                    <p><strong>System-Aktion:</strong> Ressourcen werden freigegeben</p>
+                    <p className="text-xs mt-1">→ Speicher freigeben, PCB löschen, CPU für nächsten Prozess</p>
+                  </div>
+                  <div className="bg-white p-3 rounded border">
+                    <p><strong>Zustand:</strong> TERMINATED (beendet)</p>
+                    <p className="text-xs mt-1">→ Prozess existiert nicht mehr im System</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-amber-50 p-6 rounded-lg border border-amber-200">
+          <h4 className="font-semibold text-amber-800 mb-4">🔄 Spezielle Situationen beim Scheduling</h4>
+          
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h5 className="font-medium text-amber-800 mb-2">🔄 Round Robin - Unterbrechung:</h5>
+                <div className="text-sm text-amber-700 space-y-2">
+                  <p><strong>Zeit-Interrupt:</strong> Timer läuft ab nach Quantum (z.B. 3 Zeiteinheiten)</p>
+                  <p><strong>Was passiert:</strong> RUNNING → READY (zurück in Queue)</p>
+                  <p><strong>Im Diagramm:</strong> Blauer Block wird unterbrochen → gestrichelte Linie → später wieder blau</p>
+                  <p><strong>Context-Switch:</strong> Register sichern, nächsten Prozess laden</p>
+                </div>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-amber-800 mb-2">🛑 I/O-Ereignis (später im Kurs):</h5>
+                <div className="text-sm text-amber-700 space-y-2">
+                  <p><strong>I/O-Request:</strong> Prozess braucht Festplatte/Netzwerk</p>
+                  <p><strong>Was passiert:</strong> RUNNING → BLOCKED (warten auf I/O)</p>
+                  <p><strong>Im Diagramm:</strong> Würde andere gestrichelte Farbe haben</p>
+                  <p><strong>I/O fertig:</strong> BLOCKED → READY → warten auf CPU</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-white p-4 rounded border">
+              <h5 className="font-medium text-amber-800 mb-2">📊 Wartezeit-Berechnung Schritt für Schritt:</h5>
+              <div className="text-sm text-amber-700">
+                <p><strong>Beispiel P2:</strong> Ankunft bei Zeit 1, Ausführung startet bei Zeit 8</p>
+                <p><strong>Wartezeit = Startzeit - Ankunftszeit = 8 - 1 = 7 Zeiteinheiten</strong></p>
+                <p><strong>Im Diagramm:</strong> Gestrichelte Linie von Zeit 1 bis Zeit 8 = 7 Einheiten lang</p>
+                <p className="mt-2 font-medium">💡 Die Länge der gestrichelten Linie = Wartezeit!</p>
+              </div>
             </div>
           </div>
         </div>
