@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Cpu, Settings, Clock, HardDrive, Database, Monitor, Target, FileText, Zap, Users } from 'lucide-react';
+import { Cpu, Settings, Clock, HardDrive, Database, Monitor, Target, FileText, Zap, Users, BookOpen, GraduationCap } from 'lucide-react';
 import Navigation from './components/Navigation';
 import LearningProgress from './components/LearningProgress';
 import OSIntroductionLearning from './components/OSIntroductionLearning';
@@ -11,6 +11,8 @@ import MemoryManagement from './components/MemoryManagement';
 import FileSystems from './components/FileSystems';
 import OSArchitectures from './components/OSArchitectures';
 import ExamFocus from './components/ExamFocus';
+import Exercises from './components/Exercises';
+import ExamPractice from './components/ExamPractice';
 
 const App: React.FC = () => {
   const [activeSection, setActiveSection] = useState('introduction');
@@ -60,6 +62,8 @@ const App: React.FC = () => {
     { id: 'memory', title: 'Speicherverwaltung', icon: Settings, component: MemoryManagement },
     { id: 'filesystems', title: 'Dateisysteme', icon: HardDrive, component: FileSystems },
     { id: 'architectures', title: 'BS-Architekturen', icon: Database, component: OSArchitectures },
+    { id: 'exercises', title: 'Übungen', icon: BookOpen, component: Exercises },
+    { id: 'exampractice', title: 'Beispielklausur', icon: GraduationCap, component: ExamPractice },
     { id: 'examfocus', title: 'Klausurfokus', icon: Target, component: ExamFocus },
   ];
 
