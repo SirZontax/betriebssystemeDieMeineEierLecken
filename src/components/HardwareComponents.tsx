@@ -209,8 +209,69 @@ const HardwareComponents: React.FC = () => {
         {selectedComponent === 'memory' && <MemoryHierarchyComponent />}
         {selectedComponent === 'walls' && <TechnicalWalls />}
 
+        {/* Von Neumann vs Harvard Architecture */}
+        <div className="mt-8 bg-indigo-50 p-6 rounded-lg border border-indigo-200">
+          <h4 className="font-semibold text-indigo-800 mb-3">Von-Neumann vs. Harvard-Architektur</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h5 className="font-medium text-indigo-800 mb-2">Von-Neumann-Architektur:</h5>
+              <ul className="text-sm text-indigo-700 space-y-1">
+                <li>• Gemeinsamer Speicher für Daten und Befehle</li>
+                <li>• Ein Bus für Daten- und Befehlstransfer</li>
+                <li>• Sequenzielle Abarbeitung (Befehl → Ausführung)</li>
+                <li>• Von-Neumann-Flaschenhals: Bus ist Limitierung</li>
+                <li>• Beispiele: Die meisten PCs, Laptops</li>
+              </ul>
+            </div>
+            <div>
+              <h5 className="font-medium text-indigo-800 mb-2">Harvard-Architektur:</h5>
+              <ul className="text-sm text-indigo-700 space-y-1">
+                <li>• Getrennte Speicher für Daten und Befehle</li>
+                <li>• Separate Busse für parallelen Zugriff</li>
+                <li>• Gleichzeitiger Befehlsabruf und Datenverarbeitung</li>
+                <li>• Keine Von-Neumann-Flaschenhals</li>
+                <li>• Beispiele: Mikrocontroller, DSPs, moderne CPU-Caches</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* I/O Systems */}
+        <div className="bg-teal-50 p-6 rounded-lg border border-teal-200">
+          <h4 className="font-semibold text-teal-800 mb-3">Ein-/Ausgabesysteme (I/O)</h4>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <h5 className="font-medium text-teal-800 mb-2">Polling (Programmgesteuert):</h5>
+              <ul className="text-sm text-teal-700 space-y-1">
+                <li>• CPU fragt regelmäßig I/O-Status ab</li>
+                <li>• Einfach zu implementieren</li>
+                <li>• CPU-Zeit wird "verschwendet"</li>
+                <li>• Für einfache, langsame Geräte</li>
+              </ul>
+            </div>
+            <div>
+              <h5 className="font-medium text-teal-800 mb-2">Interrupt-gesteuert:</h5>
+              <ul className="text-sm text-teal-700 space-y-1">
+                <li>• Gerät unterbricht CPU bei Ereignis</li>
+                <li>• CPU arbeitet bis Interrupt weiter</li>
+                <li>• Interrupt-Handler verarbeitet Ereignis</li>
+                <li>• Effizienter als Polling</li>
+              </ul>
+            </div>
+            <div>
+              <h5 className="font-medium text-teal-800 mb-2">DMA (Direct Memory Access):</h5>
+              <ul className="text-sm text-teal-700 space-y-1">
+                <li>• Direkter Datentransfer ohne CPU</li>
+                <li>• DMA-Controller übernimmt Transfer</li>
+                <li>• CPU wird nur am Ende informiert</li>
+                <li>• Für große Datenmengen optimal</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
         {/* Key Takeaways */}
-        <div className="mt-8 bg-green-50 p-6 rounded-lg border border-green-200">
+        <div className="bg-green-50 p-6 rounded-lg border border-green-200">
           <h4 className="font-semibold text-green-800 mb-2 flex items-center">
             <Layers className="h-5 w-5 mr-2" />
             Klausur-Kernpunkte (F.28 Hardware-Komponenten)
@@ -220,6 +281,8 @@ const HardwareComponents: React.FC = () => {
             <li>• <strong>Speicherhierarchie:</strong> Tradeoff zwischen Geschwindigkeit, Größe, Kosten</li>
             <li>• <strong>Technical Walls:</strong> Frequency Wall, Power Wall, Memory Wall</li>
             <li>• <strong>Pipeline:</strong> 3-stufige Pipeline (Holen, Decodieren, Ausführen)</li>
+            <li>• <strong>Von-Neumann vs. Harvard:</strong> Architektur-Unterschiede verstehen</li>
+            <li>• <strong>I/O-Verfahren:</strong> Polling, Interrupt, DMA unterscheiden können</li>
             <li>• <strong>Keine Details:</strong> Mehrkernchips-Architekturen ausgeschlossen</li>
           </ul>
         </div>

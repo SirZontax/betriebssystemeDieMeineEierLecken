@@ -264,6 +264,35 @@ const ProcessManagement: React.FC = () => {
                 </div>
               ))}
             </div>
+
+            <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
+              <h4 className="font-semibold text-blue-800 mb-3">Process Control Block (PCB)</h4>
+              <p className="text-blue-700 mb-3">
+                Der PCB ist die zentrale Datenstruktur für jeden Prozess im Betriebssystem.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h5 className="font-medium text-blue-800 mb-2">PCB-Inhalte:</h5>
+                  <ul className="text-sm text-blue-700 space-y-1">
+                    <li>• Prozess-ID (PID) und Parent-PID</li>
+                    <li>• Prozesszustand (Running, Ready, Blocked)</li>
+                    <li>• CPU-Register-Inhalte</li>
+                    <li>• Speicher-Management-Informationen</li>
+                    <li>• I/O-Status und offene Dateien</li>
+                    <li>• Accounting-Informationen</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 className="font-medium text-blue-800 mb-2">Verwendung:</h5>
+                  <ul className="text-sm text-blue-700 space-y-1">
+                    <li>• Kontextwechsel zwischen Prozessen</li>
+                    <li>• Prozessverwaltung durch Scheduler</li>
+                    <li>• Wiederherstellung des Prozesszustands</li>
+                    <li>• Kommunikation zwischen Prozessen</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 

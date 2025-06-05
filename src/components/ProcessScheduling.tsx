@@ -99,29 +99,60 @@ const ProcessScheduling: React.FC = () => {
   };
 
   const calculateRoundRobin = (quantum = 3) => {
-    const queue = [...processes].sort((a, b) => a.arrival - b.arrival);
     const schedule = [];
     let currentTime = 0;
-    let processQueue = [];
+    let readyQueue = [];
+    const remaining = [...processes].map(p => ({ ...p, remainingTime: p.burst, waitingTime: 0, firstStart: -1 }));
     let completed = [];
     
-    // Simplified RR simulation
-    queue.forEach(p => {
-      const remainingTime = p.burst;
-      const cycles = Math.ceil(remainingTime / quantum);
+    while (completed.length < processes.length) {
+      // Add newly arrived processes to ready queue
+      remaining.forEach(p => {
+        if (p.arrival <= currentTime && !readyQueue.includes(p) && !completed.includes(p)) {
+          readyQueue.push(p);
+        }
+      });
       
-      for (let i = 0; i < cycles; i++) {
-        const executeTime = Math.min(quantum, remainingTime - (i * quantum));
-        schedule.push({
-          ...p,
-          startTime: currentTime,
-          endTime: currentTime + executeTime,
-          slice: i + 1,
-          executeTime
-        });
-        currentTime += executeTime;
+      if (readyQueue.length === 0) {
+        // No process ready, advance time to next arrival
+        const nextArrival = Math.min(...remaining.filter(p => !completed.includes(p)).map(p => p.arrival));
+        currentTime = nextArrival;
+        continue;
       }
-    });
+      
+      // Get next process from ready queue
+      const currentProcess = readyQueue.shift();
+      const executeTime = Math.min(quantum, currentProcess.remainingTime);
+      
+      // Record first start time for waiting time calculation
+      if (currentProcess.firstStart === -1) {
+        currentProcess.firstStart = currentTime;
+        currentProcess.waitingTime = currentTime - currentProcess.arrival;
+      }
+      
+      schedule.push({
+        ...currentProcess,
+        startTime: currentTime,
+        endTime: currentTime + executeTime,
+        executeTime,
+        waitingTime: currentProcess.waitingTime,
+        turnaroundTime: 0 // Will be calculated for completed processes
+      });
+      
+      currentTime += executeTime;
+      currentProcess.remainingTime -= executeTime;
+      
+      // Check if process is completed
+      if (currentProcess.remainingTime === 0) {
+        currentProcess.turnaroundTime = currentTime - currentProcess.arrival;
+        // Update the schedule entry with final turnaround time
+        schedule[schedule.length - 1].turnaroundTime = currentProcess.turnaroundTime;
+        completed.push(currentProcess);
+      } else {
+        // Add back to ready queue if not completed
+        readyQueue.push(currentProcess);
+      }
+    }
     
     return schedule;
   };
@@ -179,9 +210,175 @@ const ProcessScheduling: React.FC = () => {
 
   const scheduleData = getScheduleData();
 
+  const TimelineChart = ({ data, algorithm }) => {
+    const maxTime = Math.max(...data.map(d => d.endTime));
+    const processIds = [...new Set(data.map(d => d.id))].sort();
+    
+    // Create full timeline for each process
+    const createProcessTimeline = (processId) => {
+      const processEvents = data.filter(d => d.id === processId).sort((a, b) => a.startTime - b.startTime);
+      const originalProcess = processes.find(p => p.id === processId);
+      const timeline = [];
+      let currentTime = originalProcess.arrival;
+      
+      processEvents.forEach((event, idx) => {
+        // Add waiting period before this execution
+        if (currentTime < event.startTime) {
+          timeline.push({
+            type: 'waiting',
+            start: currentTime,
+            duration: event.startTime - currentTime,
+            process: processId
+          });
+        }
+        
+        // Add execution period
+        timeline.push({
+          type: 'running',
+          start: event.startTime,
+          duration: event.executeTime || event.burst,
+          process: processId
+        });
+        
+        currentTime = event.endTime;
+      });
+      
+      return timeline;
+    };
+
+    return (
+      <div className="bg-white p-6 rounded-lg border">
+        <h4 className="font-semibold mb-4">Ablaufdiagramm: {algorithms[algorithm].name}</h4>
+        <div className="mb-6">
+          {/* Legend */}
+          <div className="flex items-center space-x-6 text-sm mb-6">
+            <div className="flex items-center">
+              <div className="w-6 h-3 bg-blue-500 mr-2 border border-gray-400"></div>
+              <span>Prozess läuft</span>
+            </div>
+            <div className="flex items-center">
+              <div className="w-6 h-3 border-2 border-dashed border-red-500 bg-red-100 mr-2"></div>
+              <span>Prozess wartet</span>
+            </div>
+            {algorithm === 'rr' && (
+              <div className="text-xs text-gray-600 bg-yellow-100 px-2 py-1 rounded">
+                Quantum = 3 Zeiteinheiten
+              </div>
+            )}
+          </div>
+          
+          {/* Timeline Chart */}
+          <div className="space-y-4">
+            {processIds.map(processId => {
+              const timeline = createProcessTimeline(processId);
+              const originalProcess = processes.find(p => p.id === processId);
+              
+              return (
+                <div key={processId} className="flex items-center">
+                  <div className="w-24 text-sm font-medium text-right pr-4">{processId}</div>
+                  <div className="flex-1 relative">
+                    {/* Process timeline */}
+                    <div className="flex border border-gray-400 h-10 bg-gray-50" style={{ width: `${maxTime * 10}px` }}>
+                      {timeline.map((segment, idx) => (
+                        <div
+                          key={idx}
+                          className={`flex items-center justify-center text-xs font-medium border-r border-gray-300 ${
+                            segment.type === 'running'
+                              ? 'bg-blue-500 text-white'
+                              : 'border-2 border-dashed border-red-500 bg-red-100 text-red-700'
+                          }`}
+                          style={{ 
+                            width: `${segment.duration * 10}px`,
+                            marginLeft: idx === 0 ? `${(segment.start - originalProcess.arrival) * 10}px` : '0'
+                          }}
+                        >
+                          {segment.type === 'running' ? processId : '···'}
+                        </div>
+                      ))}
+                    </div>
+                    
+                    {/* Arrival time marker */}
+                    {originalProcess.arrival > 0 && (
+                      <div 
+                        className="absolute top-0 h-10 w-0.5 bg-green-600"
+                        style={{ left: `${originalProcess.arrival * 10}px` }}
+                      >
+                        <div className="absolute -top-5 -left-8 text-xs text-green-600 font-medium">
+                          Ereignis ↓
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          
+          {/* Time axis */}
+          <div className="mt-6 flex items-center">
+            <div className="w-24 pr-4"></div>
+            <div className="flex-1 relative">
+              <div className="flex text-xs text-gray-600 border-t border-gray-400 pt-1">
+                {Array.from({ length: Math.ceil(maxTime / 5) + 1 }, (_, i) => (
+                  <div key={i} style={{ width: '50px' }} className="text-center">
+                    {i * 5}
+                  </div>
+                ))}
+              </div>
+              <div className="absolute right-0 -top-6">
+                <span className="text-sm text-gray-600 font-medium">Zeit →</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Algorithm-specific explanations */}
+        <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+          <h5 className="font-medium mb-3">Algorithmus-Details:</h5>
+          {algorithm === 'fcfs' && (
+            <div className="space-y-2 text-sm text-gray-700">
+              <p><strong>FIFO/FCFS Prinzip:</strong> First In, First Out - Prozesse werden in Ankunftsreihenfolge abgearbeitet</p>
+              <p><strong>Eigenschaften:</strong> Non-preemptive, einfach zu implementieren, kann zu Convoy-Effekt führen</p>
+              <p><strong>Vorteil:</strong> Faire Behandlung aller Prozesse, keine Starvation</p>
+              <p><strong>Nachteil:</strong> Kurze Jobs warten hinter langen Jobs → hohe durchschnittliche Wartezeit</p>
+              <p><strong>Beobachtung:</strong> Die gestrichelten Linien zeigen Wartezeiten - besonders deutlich bei kurzen Prozessen hinter langen</p>
+            </div>
+          )}
+          {algorithm === 'sjf' && (
+            <div className="space-y-2 text-sm text-gray-700">
+              <p><strong>SJF Prinzip:</strong> Shortest Job First - kürzeste verfügbare Jobs werden zuerst ausgeführt</p>
+              <p><strong>Eigenschaften:</strong> Non-preemptive, optimal für minimale durchschnittliche Wartezeit</p>
+              <p><strong>Vorteil:</strong> Minimiert durchschnittliche Wartezeit (mathematisch beweisbar optimal)</p>
+              <p><strong>Nachteil:</strong> Starvation möglich für lange Jobs, Burst-Zeit muss im Voraus bekannt sein</p>
+              <p><strong>Beobachtung:</strong> Kurze Jobs werden bevorzugt, lange Jobs können lange warten (gestrichelte Bereiche)</p>
+            </div>
+          )}
+          {algorithm === 'rr' && (
+            <div className="space-y-2 text-sm text-gray-700">
+              <p><strong>Round Robin Prinzip:</strong> Jeder Prozess erhält gleiche Zeitscheiben (Quantum = 3)</p>
+              <p><strong>Eigenschaften:</strong> Preemptive, zyklische Zuteilung, Time-Sharing</p>
+              <p><strong>Vorteil:</strong> Faire Verteilung, gute Antwortzeiten für interaktive Systeme</p>
+              <p><strong>Nachteil:</strong> Context-Switch Overhead, Quantum-Wahl kritisch für Performance</p>
+              <p><strong>Beobachtung:</strong> Prozesse wechseln sich ab - mehrere Ausführungsperioden pro Prozess sichtbar</p>
+            </div>
+          )}
+          {algorithm === 'priority' && (
+            <div className="space-y-2 text-sm text-gray-700">
+              <p><strong>Priority Prinzip:</strong> Prozesse mit höchster Priorität werden zuerst ausgeführt</p>
+              <p><strong>Eigenschaften:</strong> Non-preemptive, niedrigere Zahl = höhere Priorität</p>
+              <p><strong>Vorteil:</strong> Wichtige Prozesse werden bevorzugt behandelt</p>
+              <p><strong>Nachteil:</strong> Starvation möglich für niedrig-prioritäre Prozesse</p>
+              <p><strong>Beobachtung:</strong> Reihenfolge richtet sich nach Priorität, nicht nach Ankunftszeit oder Burst-Zeit</p>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   const GanttChart = ({ data }) => (
     <div className="bg-white p-6 rounded-lg border">
-      <h4 className="font-semibold mb-4">Gantt-Diagramm</h4>
+      <h4 className="font-semibold mb-4">Gantt-Diagramm (Klassische Darstellung)</h4>
       <div className="overflow-x-auto">
         <div className="flex border border-gray-300 min-w-max">
           {data.map((item, index) => (
@@ -356,6 +553,7 @@ const ProcessScheduling: React.FC = () => {
 
         {/* Visualization */}
         <div className="space-y-6">
+          <TimelineChart data={scheduleData} algorithm={selectedAlgorithm} />
           <GanttChart data={scheduleData} />
           <ProcessTable data={scheduleData} />
         </div>
@@ -384,6 +582,248 @@ const ProcessScheduling: React.FC = () => {
             <li>• Umlaufzeit = Endzeit - Ankunftszeit</li>
             <li>• Antwortzeit = Erste CPU-Zuteilung - Ankunftszeit</li>
           </ul>
+        </div>
+
+        <div className="bg-purple-50 p-6 rounded-lg border border-purple-200">
+          <h4 className="font-semibold text-purple-800 mb-3">Scheduling-Kriterien & Ziele</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h5 className="font-medium text-purple-800 mb-2">Performance-Kriterien:</h5>
+              <ul className="text-sm text-purple-700 space-y-1">
+                <li>• <strong>Durchsatz (Throughput):</strong> Anzahl abgearbeiteter Prozesse pro Zeiteinheit</li>
+                <li>• <strong>CPU-Auslastung:</strong> Prozentuale Nutzung der CPU</li>
+                <li>• <strong>Warteschlangen-Länge:</strong> Anzahl wartender Prozesse</li>
+                <li>• <strong>Fairness:</strong> Gleiche Behandlung aller Prozesse</li>
+              </ul>
+            </div>
+            <div>
+              <h5 className="font-medium text-purple-800 mb-2">Zeit-Kriterien:</h5>
+              <ul className="text-sm text-purple-700 space-y-1">
+                <li>• <strong>Wartezeit minimieren:</strong> Zeit in Ready-Queue</li>
+                <li>• <strong>Umlaufzeit minimieren:</strong> Gesamtzeit im System</li>
+                <li>• <strong>Antwortzeit minimieren:</strong> Zeit bis erste Reaktion</li>
+                <li>• <strong>Vorhersagbarkeit:</strong> Konstante Ausführungszeiten</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-green-50 p-6 rounded-lg border border-green-200">
+          <h4 className="font-semibold text-green-800 mb-3">Preemptive vs. Non-Preemptive Scheduling</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h5 className="font-medium text-green-800 mb-2">Non-Preemptive (Kooperativ):</h5>
+              <ul className="text-sm text-green-700 space-y-1">
+                <li>• Prozess läuft bis zur Beendigung oder Blockierung</li>
+                <li>• Keine Unterbrechung durch Scheduler</li>
+                <li>• Beispiele: FCFS, SJF, Priority</li>
+                <li>• Einfacher zu implementieren</li>
+                <li>• Kann zu Starvation führen</li>
+              </ul>
+            </div>
+            <div>
+              <h5 className="font-medium text-green-800 mb-2">Preemptive (Verdrängend):</h5>
+              <ul className="text-sm text-green-700 space-y-1">
+                <li>• Scheduler kann laufende Prozesse unterbrechen</li>
+                <li>• Zeitscheiben oder Prioritätsänderungen</li>
+                <li>• Beispiele: Round Robin, Preemptive SJF, SRTF</li>
+                <li>• Bessere Reaktionszeiten</li>
+                <li>• Context-Switch Overhead</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-orange-50 p-6 rounded-lg border border-orange-200">
+          <h4 className="font-semibold text-orange-800 mb-3">Häufige Scheduling-Probleme</h4>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <h5 className="font-medium text-orange-800 mb-2">Starvation:</h5>
+              <p className="text-sm text-orange-700 mb-2">
+                Prozesse warten unendlich lange auf CPU-Zuteilung
+              </p>
+              <ul className="text-xs text-orange-600 space-y-1">
+                <li>• Tritt bei Priority Scheduling auf</li>
+                <li>• Lösung: Aging (Priorität steigt mit Wartezeit)</li>
+              </ul>
+            </div>
+            <div>
+              <h5 className="font-medium text-orange-800 mb-2">Convoy-Effekt:</h5>
+              <p className="text-sm text-orange-700 mb-2">
+                Kurze Prozesse warten hinter langen Prozessen
+              </p>
+              <ul className="text-xs text-orange-600 space-y-1">
+                <li>• Typisch bei FCFS</li>
+                <li>• Hohe durchschnittliche Wartezeit</li>
+              </ul>
+            </div>
+            <div>
+              <h5 className="font-medium text-orange-800 mb-2">Time Slice Issues:</h5>
+              <p className="text-sm text-orange-700 mb-2">
+                Probleme bei Round Robin Zeitscheiben
+              </p>
+              <ul className="text-xs text-orange-600 space-y-1">
+                <li>• Zu kurz: Hoher Context-Switch Overhead</li>
+                <li>• Zu lang: Schlechte Antwortzeiten</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-indigo-50 p-6 rounded-lg border border-indigo-200">
+          <h4 className="font-semibold text-indigo-800 mb-4">📖 Wie lese ich das Ablaufdiagramm?</h4>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <div>
+              <h5 className="font-medium text-indigo-800 mb-3">Diagramm-Struktur verstehen:</h5>
+              <div className="space-y-3 text-sm text-indigo-700">
+                <div className="flex items-start">
+                  <span className="font-bold mr-2">Y-Achse:</span>
+                  <span>Jede Zeile = Ein Prozess (P1, P2, P3, P4)</span>
+                </div>
+                <div className="flex items-start">
+                  <span className="font-bold mr-2">X-Achse:</span>
+                  <span>Zeit in Zeiteinheiten (0, 5, 10, 15, ...)</span>
+                </div>
+                <div className="flex items-start">
+                  <span className="font-bold mr-2">Blaue Blöcke:</span>
+                  <span>Prozess läuft auf der CPU</span>
+                </div>
+                <div className="flex items-start">
+                  <span className="font-bold mr-2">Gestrichelte Bereiche:</span>
+                  <span>Prozess wartet in der Ready-Queue</span>
+                </div>
+                <div className="flex items-start">
+                  <span className="font-bold mr-2">Grüne Linie "Ereignis":</span>
+                  <span>Ankunftszeit des Prozesses im System</span>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h5 className="font-medium text-indigo-800 mb-3">Was passiert wann?</h5>
+              <div className="space-y-2 text-sm text-indigo-700">
+                <div className="bg-white p-3 rounded border">
+                  <p><strong>Vor dem Ereignis:</strong> Prozess existiert noch nicht im System</p>
+                </div>
+                <div className="bg-white p-3 rounded border">
+                  <p><strong>Gestrichelte Phase:</strong> Prozess ist da, wartet aber auf CPU-Zuteilung</p>
+                </div>
+                <div className="bg-white p-3 rounded border">
+                  <p><strong>Blaue Phase:</strong> Prozess hat CPU und führt Berechnungen aus</p>
+                </div>
+                <div className="bg-white p-3 rounded border">
+                  <p><strong>Nach blauer Phase:</strong> Prozess ist fertig und verlässt das System</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white p-4 rounded border">
+            <h5 className="font-medium text-indigo-800 mb-3">🔍 Beispiel-Analyse (FCFS):</h5>
+            <div className="text-sm text-indigo-700 space-y-2">
+              <p><strong>Schritt 1:</strong> P1 kommt zur Zeit 0 an → sofort auf CPU (keine Wartezeit)</p>
+              <p><strong>Schritt 2:</strong> P2 kommt zur Zeit 1 an → muss warten, da P1 noch läuft (gestrichelt)</p>
+              <p><strong>Schritt 3:</strong> P1 fertig bei Zeit 8 → P2 kann starten (Ende der gestrichelten Phase)</p>
+              <p><strong>Schritt 4:</strong> P3 und P4 warten ebenfalls in der Ready-Queue (gestrichelte Bereiche)</p>
+              <p><strong>Ergebnis:</strong> Lange Wartezeiten für spätere Prozesse → Convoy-Effekt sichtbar!</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-emerald-50 p-6 rounded-lg border border-emerald-200">
+          <h4 className="font-semibold text-emerald-800 mb-4">⚙️ Wie funktionieren die Scheduling-Algorithmen?</h4>
+          
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-white p-4 rounded border">
+                <h5 className="font-medium text-emerald-800 mb-2">🔄 FCFS/FIFO Ablauf:</h5>
+                <ol className="text-sm text-emerald-700 space-y-1 list-decimal list-inside">
+                  <li>Prozesse kommen der Reihe nach an</li>
+                  <li>Ready-Queue = Warteschlange (First In, First Out)</li>
+                  <li>CPU wird dem ersten Prozess in der Queue gegeben</li>
+                  <li>Prozess läuft bis zum Ende (non-preemptive)</li>
+                  <li>Nächster Prozess aus Queue bekommt CPU</li>
+                </ol>
+              </div>
+              
+              <div className="bg-white p-4 rounded border">
+                <h5 className="font-medium text-emerald-800 mb-2">⚡ SJF Ablauf:</h5>
+                <ol className="text-sm text-emerald-700 space-y-1 list-decimal list-inside">
+                  <li>Prozesse kommen an und werden in Ready-Queue eingereiht</li>
+                  <li>CPU wird frei → Wähle kürzesten verfügbaren Job</li>
+                  <li>Prozess läuft komplett durch (non-preemptive)</li>
+                  <li>Wieder kürzesten verfügbaren Job wählen</li>
+                  <li>Problem: Lange Jobs können "verhungern"</li>
+                </ol>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-white p-4 rounded border">
+                <h5 className="font-medium text-emerald-800 mb-2">🔄 Round Robin Ablauf:</h5>
+                <ol className="text-sm text-emerald-700 space-y-1 list-decimal list-inside">
+                  <li>Jeder Prozess bekommt Zeitscheibe (Quantum = 3)</li>
+                  <li>Nach Quantum → Prozess wird unterbrochen (preemptive)</li>
+                  <li>Prozess kommt ans Ende der Ready-Queue</li>
+                  <li>Nächster Prozess aus Queue bekommt CPU</li>
+                  <li>Zyklus wiederholt sich bis alle fertig</li>
+                </ol>
+              </div>
+              
+              <div className="bg-white p-4 rounded border">
+                <h5 className="font-medium text-emerald-800 mb-2">🎯 Priority Ablauf:</h5>
+                <ol className="text-sm text-emerald-700 space-y-1 list-decimal list-inside">
+                  <li>Jeder Prozess hat Prioritätszahl (niedrig = hoch)</li>
+                  <li>CPU wird frei → Wähle höchste verfügbare Priorität</li>
+                  <li>Prozess läuft komplett durch (non-preemptive)</li>
+                  <li>Niedrig-prioritäre Jobs können lange warten</li>
+                  <li>Lösung: Aging (Priorität steigt mit Wartezeit)</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-cyan-50 p-6 rounded-lg border border-cyan-200">
+          <h4 className="font-semibold text-cyan-800 mb-3">📊 Schritt-für-Schritt Berechnung</h4>
+          <p className="text-cyan-700 mb-4">
+            Verstehen Sie, wie die Berechnungen für jeden Algorithmus durchgeführt werden:
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h5 className="font-medium text-cyan-800 mb-2">Formeln (klausurrelevant!):</h5>
+              <div className="space-y-2 text-sm font-mono bg-white p-3 rounded border">
+                <p><strong>Wartezeit:</strong> Startzeit - Ankunftszeit</p>
+                <p><strong>Umlaufzeit:</strong> Endzeit - Ankunftszeit</p>
+                <p><strong>Antwortzeit:</strong> Erste CPU-Zuteilung - Ankunftszeit</p>
+                <p><strong>Ø Wartezeit:</strong> Summe(Wartezeiten) / Anzahl_Prozesse</p>
+                <p><strong>Ø Umlaufzeit:</strong> Summe(Umlaufzeiten) / Anzahl_Prozesse</p>
+              </div>
+            </div>
+            <div>
+              <h5 className="font-medium text-cyan-800 mb-2">Vorgehen in der Klausur:</h5>
+              <ol className="text-sm text-cyan-700 space-y-1">
+                <li>1. Prozesse nach Algorithmus sortieren</li>
+                <li>2. Timeline zeichnen mit gestrichelten Wartezeiten</li>
+                <li>3. Start- und Endzeiten notieren</li>
+                <li>4. Wartezeit und Umlaufzeit berechnen</li>
+                <li>5. Durchschnittswerte berechnen</li>
+                <li>6. Gantt-Diagramm zeichnen</li>
+              </ol>
+            </div>
+          </div>
+          
+          <div className="mt-6 bg-white p-4 rounded border">
+            <h5 className="font-medium text-cyan-800 mb-2">⚠️ Häufige Klausur-Fehler vermeiden:</h5>
+            <ul className="text-sm text-cyan-700 space-y-1">
+              <li>• <strong>Gestrichelte Linien vergessen:</strong> Wartezeiten MÜSSEN sichtbar sein!</li>
+              <li>• <strong>Ankunftszeiten ignorieren:</strong> Prozesse können nicht vor ihrer Ankunft starten</li>
+              <li>• <strong>Falsche Prioritäten:</strong> Niedrige Zahl = Hohe Priorität</li>
+              <li>• <strong>Round Robin Quantum:</strong> Exakt nach Zeitscheibe unterbrechen</li>
+              <li>• <strong>Durchschnitt falsch:</strong> Summe durch Anzahl Prozesse, nicht durch Zeit</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

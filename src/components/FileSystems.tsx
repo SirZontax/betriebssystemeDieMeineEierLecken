@@ -259,6 +259,54 @@ const FileSystems: React.FC = () => {
               <p><strong>GPT:</strong> Bis 128 Partitionen, {'>'} 2TB, UEFI</p>
             </div>
           </div>
+
+          <div className="bg-purple-50 p-6 rounded-lg border border-purple-200">
+            <h4 className="font-semibold text-purple-800 mb-3">Dateisystem-Implementierung</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h5 className="font-medium text-purple-800 mb-2">Freispeicher-Verwaltung:</h5>
+                <ul className="text-sm text-purple-700 space-y-1">
+                  <li>• <strong>Bitmap:</strong> Bit pro Block (0=frei, 1=belegt)</li>
+                  <li>• <strong>Verkettete Liste:</strong> Zeiger auf nächsten freien Block</li>
+                  <li>• <strong>Gruppierung:</strong> Blöcke von freien Blöcken</li>
+                  <li>• <strong>Zählung:</strong> Erste Adresse + Anzahl freier Blöcke</li>
+                </ul>
+              </div>
+              <div>
+                <h5 className="font-medium text-purple-800 mb-2">Verzeichnis-Implementierung:</h5>
+                <ul className="text-sm text-purple-700 space-y-1">
+                  <li>• <strong>Linear:</strong> Einfache Liste (langsam bei vielen Dateien)</li>
+                  <li>• <strong>Hash-Tabelle:</strong> Schneller Zugriff auf Dateinamen</li>
+                  <li>• <strong>B-Trees:</strong> Sortierte, balancierte Bäume</li>
+                  <li>• <strong>Verzeichniseintrag:</strong> Name, Inode-Nummer, Typ</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-cyan-50 p-6 rounded-lg border border-cyan-200">
+            <h4 className="font-semibold text-cyan-800 mb-3">Journaling & Konsistenz</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h5 className="font-medium text-cyan-800 mb-2">Journaling-Dateisysteme:</h5>
+                <ul className="text-sm text-cyan-700 space-y-1">
+                  <li>• <strong>Zweck:</strong> Schutz vor Inkonsistenzen bei Systemabsturz</li>
+                  <li>• <strong>Write-Ahead Logging:</strong> Änderungen erst in Journal</li>
+                  <li>• <strong>Commit:</strong> Nach Journal-Eintrag echte Änderung</li>
+                  <li>• <strong>Recovery:</strong> Journal bei Neustart abarbeiten</li>
+                </ul>
+              </div>
+              <div>
+                <h5 className="font-medium text-cyan-800 mb-2">Konsistenz-Probleme:</h5>
+                <ul className="text-sm text-cyan-700 space-y-1">
+                  <li>• <strong>Lost Updates:</strong> Gleichzeitige Schreibzugriffe</li>
+                  <li>• <strong>Inkonsistente Metadaten:</strong> Inode vs. Verzeichnis</li>
+                  <li>• <strong>Phantom Files:</strong> Inode ohne Verzeichniseintrag</li>
+                  <li>• <strong>Lösung:</strong> fsck (File System Check) nach Absturz</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Cpu, Settings, Clock, HardDrive, Database, Monitor, Target, FileText, Zap, Users, BookOpen, GraduationCap } from 'lucide-react';
 import Navigation from './components/Navigation';
-import LearningProgress from './components/LearningProgress';
 import OSIntroductionLearning from './components/OSIntroductionLearning';
 import HardwareComponents from './components/HardwareComponents';
 import ProcessManagement from './components/ProcessManagement';
@@ -85,11 +84,6 @@ const App: React.FC = () => {
       </header>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <LearningProgress 
-          completedTopics={completedTopics}
-          totalTopics={sections.length}
-          currentTopic={activeSection}
-        />
         
         <Navigation 
           sections={sections}

@@ -317,19 +317,70 @@ const ThreadsAndSynchronization: React.FC = () => {
         {selectedTopic === 'synchronization' && <SynchronizationComponent />}
         {selectedTopic === 'atomic' && <AtomicOperationsComponent />}
 
-        {/* Key Takeaways */}
-        <div className="mt-8 bg-indigo-50 p-6 rounded-lg border border-indigo-200">
-          <h4 className="font-semibold text-indigo-800 mb-2 flex items-center">
-            <Shield className="h-5 w-5 mr-2" />
-            Klausur-Kernpunkte
-          </h4>
-          <ul className="text-indigo-700 space-y-1 text-sm">
-            <li>• Thread vs. Prozess: Gemeinsamer Adressraum, leichtgewichtig</li>
-            <li>• User-Level vs. Kernel-Level Threads: Vor- und Nachteile</li>
-            <li>• Race Conditions erkennen und Critical Sections identifizieren</li>
-            <li>• Atomare Operationen verstehen: Test-and-Set, Compare-and-Swap</li>
-            <li>• Synchronisationsprobleme lösen: Mutex, Semaphoren, Monitore</li>
-          </ul>
+        {/* Additional Synchronization Concepts */}
+        <div className="mt-8 space-y-6">
+          <div className="bg-purple-50 p-6 rounded-lg border border-purple-200">
+            <h4 className="font-semibold text-purple-800 mb-3">Semaphoren vs. Mutex</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <h5 className="font-medium text-purple-800 mb-2">Mutex (Binary Semaphore):</h5>
+                <ul className="text-sm text-purple-700 space-y-1">
+                  <li>• Besitz-Konzept: Nur Besitzer kann freigeben</li>
+                  <li>• Binärer Zustand: 0 oder 1</li>
+                  <li>• Für Critical Sections</li>
+                  <li>• Priority Inheritance möglich</li>
+                </ul>
+              </div>
+              <div>
+                <h5 className="font-medium text-purple-800 mb-2">Counting Semaphore:</h5>
+                <ul className="text-sm text-purple-700 space-y-1">
+                  <li>• Kein Besitz-Konzept</li>
+                  <li>• Zählerbasiert: 0, 1, 2, ...</li>
+                  <li>• Für Ressourcenverwaltung</li>
+                  <li>• Producer-Consumer-Problem</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-orange-50 p-6 rounded-lg border border-orange-200">
+            <h4 className="font-semibold text-orange-800 mb-3">Deadlock-Vermeidung</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <h5 className="font-medium text-orange-800 mb-2">Coffman-Bedingungen (alle müssen erfüllt sein):</h5>
+                <ul className="text-sm text-orange-700 space-y-1">
+                  <li>• Mutual Exclusion</li>
+                  <li>• Hold and Wait</li>
+                  <li>• No Preemption</li>
+                  <li>• Circular Wait</li>
+                </ul>
+              </div>
+              <div>
+                <h5 className="font-medium text-orange-800 mb-2">Vermeidungsstrategien:</h5>
+                <ul className="text-sm text-orange-700 space-y-1">
+                  <li>• Lock Ordering (verhindert Circular Wait)</li>
+                  <li>• Timeouts bei Lock-Akquisition</li>
+                  <li>• Banker's Algorithm</li>
+                  <li>• Deadlock Detection & Recovery</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-indigo-50 p-6 rounded-lg border border-indigo-200">
+            <h4 className="font-semibold text-indigo-800 mb-2 flex items-center">
+              <Shield className="h-5 w-5 mr-2" />
+              Klausur-Kernpunkte
+            </h4>
+            <ul className="text-indigo-700 space-y-1 text-sm">
+              <li>• Thread vs. Prozess: Gemeinsamer Adressraum, leichtgewichtig</li>
+              <li>• User-Level vs. Kernel-Level Threads: Vor- und Nachteile</li>
+              <li>• Race Conditions erkennen und Critical Sections identifizieren</li>
+              <li>• Atomare Operationen verstehen: Test-and-Set, Compare-and-Swap</li>
+              <li>• Synchronisationsprobleme lösen: Mutex, Semaphoren, Monitore</li>
+              <li>• Deadlock-Bedingungen kennen und Vermeidungsstrategien</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

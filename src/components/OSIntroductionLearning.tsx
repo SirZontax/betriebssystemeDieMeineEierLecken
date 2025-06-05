@@ -390,6 +390,33 @@ const OSIntroductionLearning: React.FC<OSIntroductionLearningProps> = ({
               Merksatz: <strong>A-P-S-D-S-B</strong> (Abstraktion, Prozesse, Speicher, Dateien, Sicherheit, Benutzeroberfläche)
             </p>
           </div>
+
+          <div className="bg-teal-50 p-4 rounded-lg border border-teal-200">
+            <h5 className="font-medium text-teal-800 mb-3">System Calls (Systemaufrufe)</h5>
+            <p className="text-teal-700 text-sm mb-3">
+              Schnittstelle zwischen Anwendungen und Betriebssystem - der einzige Weg vom User- in den Kernel-Modus.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <h6 className="font-medium text-teal-800 mb-2">Kategorien:</h6>
+                <ul className="text-sm text-teal-700 space-y-1">
+                  <li>• <strong>Prozessverwaltung:</strong> fork(), exec(), exit()</li>
+                  <li>• <strong>Dateisystem:</strong> open(), read(), write(), close()</li>
+                  <li>• <strong>Kommunikation:</strong> pipe(), socket(), send()</li>
+                  <li>• <strong>Speicherverwaltung:</strong> malloc(), mmap()</li>
+                </ul>
+              </div>
+              <div>
+                <h6 className="font-medium text-teal-800 mb-2">Ablauf:</h6>
+                <ul className="text-sm text-teal-700 space-y-1">
+                  <li>• 1. Software-Interrupt (Trap)</li>
+                  <li>• 2. Mode Switch: User → Kernel</li>
+                  <li>• 3. Kernel verarbeitet Anfrage</li>
+                  <li>• 4. Return: Kernel → User Mode</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       )
     },

@@ -448,11 +448,73 @@ const MemoryManagement: React.FC = () => {
               <AlertTriangle className="h-5 w-5 mr-2" />
               Memory Wall
             </h4>
-            <p className="text-orange-700">
+            <p className="text-orange-700 mb-3">
               Das wachsende Ungleichgewicht zwischen CPU- und Speicher-Geschwindigkeit. 
               Grund: Limitierte Bandbreite über Chipgrenzen hinweg (Bandwidth Wall).
               Bei Von-Neumann-Architektur verschärft, da Daten und Befehle sich den Bus teilen.
             </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <h5 className="font-medium text-orange-800 mb-2">Ursachen:</h5>
+                <ul className="text-sm text-orange-700 space-y-1">
+                  <li>• CPU-Geschwindigkeit steigt exponentiell</li>
+                  <li>• Speicher-Latenz verbessert sich nur linear</li>
+                  <li>• Bus-Bandbreite ist physikalisch limitiert</li>
+                  <li>• Pin-Count-Beschränkungen bei Chips</li>
+                </ul>
+              </div>
+              <div>
+                <h5 className="font-medium text-orange-800 mb-2">Lösungsansätze:</h5>
+                <ul className="text-sm text-orange-700 space-y-1">
+                  <li>• Mehrstufige Cache-Hierarchien</li>
+                  <li>• Prefetching und Prediction</li>
+                  <li>• Parallelisierung (Multicore)</li>
+                  <li>• Harvard-Architektur (getrennte Busse)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-teal-50 p-6 rounded-lg border border-teal-200">
+            <h4 className="font-semibold text-teal-800 mb-3">Page Replacement Algorithmen (Klausurrelevant!)</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <h5 className="font-medium text-teal-800 mb-2">FIFO (First-In-First-Out):</h5>
+                <ul className="text-sm text-teal-700 space-y-1">
+                  <li>• Älteste Seite wird ersetzt</li>
+                  <li>• Einfach zu implementieren</li>
+                  <li>• Kann zu Belady's Anomaly führen</li>
+                  <li>• Mehr Frames → mehr Page Faults möglich</li>
+                </ul>
+              </div>
+              <div>
+                <h5 className="font-medium text-teal-800 mb-2">LRU (Least Recently Used):</h5>
+                <ul className="text-sm text-teal-700 space-y-1">
+                  <li>• Am längsten unbenutzte Seite wird ersetzt</li>
+                  <li>• Näherung an optimalen Algorithmus</li>
+                  <li>• Aufwändiger zu implementieren</li>
+                  <li>• Kein Belady's Anomaly</li>
+                </ul>
+              </div>
+              <div>
+                <h5 className="font-medium text-teal-800 mb-2">Optimal (OPT):</h5>
+                <ul className="text-sm text-teal-700 space-y-1">
+                  <li>• Ersetzt Seite, die am längsten nicht gebraucht wird</li>
+                  <li>• Theoretisch optimal</li>
+                  <li>• Praktisch nicht umsetzbar (Zukunft unbekannt)</li>
+                  <li>• Vergleichsstandard für andere Algorithmen</li>
+                </ul>
+              </div>
+              <div>
+                <h5 className="font-medium text-teal-800 mb-2">Clock/Second Chance:</h5>
+                <ul className="text-sm text-teal-700 space-y-1">
+                  <li>• Approximation von LRU mit Reference Bit</li>
+                  <li>• Zirkulare Liste mit Zeiger</li>
+                  <li>• Prakt. implementierbar</li>
+                  <li>• Guter Kompromiss Performance/Aufwand</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
