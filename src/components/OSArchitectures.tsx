@@ -56,7 +56,7 @@ const OSArchitectures: React.FC = () => {
         'Kompromiss-Lösung',
         'Architektur-Entscheidungen schwierig'
       ],
-      examples: ['Windows NT', 'macOS', 'BeOS'],
+      examples: ['Windows NT', 'BeOS'],
       color: 'purple',
       focus: false
     }
@@ -107,7 +107,7 @@ const OSArchitectures: React.FC = () => {
         'Robust und fehlertolerant in Bedienung',
         'Multiprogrammiersysteme (parallele Apps)'
       ],
-      examples: ['Windows', 'Linux', 'MacOS'],
+      examples: ['Windows', 'Linux'],
       color: 'green',
       focus: false
     },
@@ -119,7 +119,7 @@ const OSArchitectures: React.FC = () => {
         'Energieeffizienz, Touch-Unterstützung',
         'Apps können jederzeit unterbrochen werden'
       ],
-      examples: ['Android', 'iOS'],
+      examples: ['iOS'],
       color: 'indigo',
       focus: true
     },

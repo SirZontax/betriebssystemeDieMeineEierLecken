@@ -53,32 +53,6 @@ const ProcessManagement: React.FC = () => {
     }
   ];
 
-  const processTerminationTypes = [
-    {
-      type: 'Normales Beenden',
-      description: 'Ordnungsgemäße Programmabarbeitung',
-      syscalls: 'UNIX: exit(), Windows: exitProcess()',
-      color: 'green'
-    },
-    {
-      type: 'Freiwilliges Beenden (Fehler)',
-      description: 'Programm erkennt Fehler und beendet sich selbst',
-      syscalls: 'Logging, Konsolenausgabe',
-      color: 'yellow'
-    },
-    {
-      type: 'Unfreiwilliges Beenden (Fehler)',
-      description: 'Schwerwiegender Fehler führt zum Abbruch',
-      syscalls: 'Speicherzugriffsverletzung, Division durch null',
-      color: 'orange'
-    },
-    {
-      type: 'Beendigung durch anderen Prozess',
-      description: 'Externer Prozess beendet den Prozess',
-      syscalls: 'UNIX: kill(), Windows: TerminateProcess()',
-      color: 'red'
-    }
-  ];
 
   const processExamples = [
     { id: 1, name: 'Browser', state: 'Running', pid: 1234 },
@@ -169,7 +143,6 @@ const ProcessManagement: React.FC = () => {
             { id: 'efficiency', label: 'CPU-Effizienz' },
             { id: 'threading', label: 'Threading-Konzepte' },
             { id: 'creation', label: 'Prozess-Erzeugung' },
-            { id: 'termination', label: 'Prozess-Beendigung' },
             { id: 'hierarchies', label: 'Prozess-Hierarchien' }
           ].map((tab) => (
             <button
@@ -294,17 +267,6 @@ const ProcessManagement: React.FC = () => {
           </div>
         )}
 
-        {currentExample === 'termination' && (
-          <div className="space-y-6">
-            <div className="bg-red-50 p-6 rounded-lg border border-red-200">
-              <h4 className="font-semibold text-red-800 mb-2">Nicht klausurrelevant</h4>
-              <p className="text-red-700">
-                Prozessbeendigung ist laut Klausureinschränkung "raus" - 
-                Konzentrieren Sie sich auf andere Themen.
-              </p>
-            </div>
-          </div>
-        )}
 
         {currentExample === 'hierarchies' && (
           <div className="space-y-6">
